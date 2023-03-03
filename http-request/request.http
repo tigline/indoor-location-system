@@ -1,0 +1,19 @@
+POST http://localhost:9050/api/v1/login
+Content-Type: application/json
+
+{
+  "username": "lgguan@live.cn",
+  "password": "123456"
+}
+
+> {%
+    client.global.set("accessToken", response.body.data.accessToken)
+%}
+
+###
+GET http://localhost:9050/message
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImxnZ3VhbiJ9.eyJpc3MiOiJJbmRvb3IgUG9zaXRpb25pbmcgU3lzdGVtIiwic3ViIjoiQWNjZXNzIHRva2VuIiwiZXhwIjoxNjc1NjEzNTMzLCJ1c2VySWQiOiIxNjIxNzU5MDE5MzI5MDUyNjc0Iiwicm9sZSI6IlVzZXIifQ.ECMALmshpThggMBEqNhtz8DfWmv1uPW9K3PrvwOzRq8
+
+
+###
+WEBSOCKET localhost:9050/websocket?userId=1622783067251372034

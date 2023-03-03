@@ -1,0 +1,40 @@
+server:
+  port: 9050
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ips?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
+    username: lgguan
+    password: Lgguan@2023
+
+mqtt:
+  url: tcp://127.0.0.1:1883
+  client-id: ${random.uuid}
+  username: lgguan
+  password: Lgguan@2023
+  subscribe-topics:
+    - /ips/pub/AOA_data
+    - /ips/pub/station_online_status
+    - /ips/pub/AOA_Station_His
+
+external:
+  url: http://127.0.0.1:8888/
+
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+  writer-with-order-by-keys: true
+
+knife4j:
+  enable: true
+  setting:
+    enable-dynamic-parameter: true
+    enable-swagger-models: false
+    enable-footer: false
+
+mybatis-plus:
+  type-handlers-package: com.lgguan.iot.position.mapper.handler
+  global-config:
+    db-config:
+      update-strategy: ignored

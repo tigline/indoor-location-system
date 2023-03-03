@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lgguan.iot.position.mapper.IFenceInfoMapper">
+    <resultMap id="fenceAndMap" type="com.lgguan.iot.position.bean.FenceAndMapInfo">
+        <id property="fenceId" column="fence_id" />
+        <result property="name" column="name" />
+        <result property="mapId" column="map_id" />
+        <result property="mapName" column="map_name" />
+        <result property="type" column="type" />
+        <result property="points" column="points" typeHandler="com.lgguan.iot.position.mapper.handler.PointListTypeHandler" />
+        <result property="enabled" column="enabled" />
+    </resultMap>
+
+    <select id="pageFenceAndMap" resultMap="fenceAndMap">
+        select fi.fence_id, fi.name, fi.map_id, mi.name as map_name, fi.type, fi.points, fi.enabled
+        from fence_info fi
+        left join map_info mi on fi.map_id = mi.map_id
+        <where>
+            <if test="param.mapId != null and param.mapId != ''">
+                and fi.map_id = #{param.mapId}
+            </if>
+            <if test="param.type != null">
+                and fi.type = #{param.type}
+            </if>
+            <if test="param.name != null and param.name != ''">
+                and fi.name like concat('%',#{param.name}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

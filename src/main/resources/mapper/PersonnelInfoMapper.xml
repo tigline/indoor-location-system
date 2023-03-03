@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lgguan.iot.position.mapper.IPersonnelInfoMapper">
+    <resultMap id="personnelFillInfo" type="com.lgguan.iot.position.bean.PersonnelFillInfo">
+        <id property="personnelId" column="personnel_id" />
+        <result property="name" column="name" />
+        <result property="sex" column="sex" />
+        <result property="tag" column="tag" />
+        <result property="typeId" column="type_id" />
+        <result property="typeName" column="type_name" />
+        <result property="depId" column="dep_id" />
+        <result property="depName" column="dep_name" />
+        <result property="avatar" column="avatar" />
+    </resultMap>
+
+    <select id="pageDepPersonnelFillInfo" resultMap="personnelFillInfo">
+        select pi.personnel_id,
+               pi.name,
+               pi.sex,
+               pi.tag,
+               pi.type_id,
+               pti.type_name,
+               pi.dep_id,
+               di.name as dep_name,
+               pi.avatar
+        from (WITH RECURSIVE children AS (SELECT di.dep_id, di.parent_id, di.name
+                                          FROM department_info di
+                                          WHERE parent_id = #{depId}
+                                          UNION ALL
+                                          SELECT di.dep_id, di.parent_id, di.name
+                                          FROM department_info di
+                                                   JOIN children c ON di.parent_id = c.dep_id)
+              SELECT dep_id, parent_id, name
+              FROM children
+              UNION ALL
+              select di.dep_id, di.parent_id, di.name
+              from department_info di
+              where di.dep_id = #{depId}) di
+                 inner join personnel_info pi on di.dep_id = pi.dep_id
+                 left join personnel_type_info pti on pi.type_id = pti.type_id
+    </select>
+
+    <select id="pagePersonnelFillInfo" resultMap="personnelFillInfo">
+        select pi.personnel_id,
+               pi.name,
+               pi.sex,
+               pi.tag,
+               pi.type_id,
+               pti.type_name,
+               pi.dep_id,
+               di.name as dep_name,
+               pi.avatar
+        from personnel_info pi
+                 left join personnel_type_info pti on pi.type_id = pti.type_id
+                 left join department_info di on pi.dep_id = di.dep_id
+        <where>
+            <if test="searchValue != null and searchValue != ''">
+                and (pi.name like concat('%', #{searchValue},'%')
+                         or pi.tag like concat('%', #{searchValue},'%'))
+            </if>
+        </where>
+    </select>
+</mapper>
