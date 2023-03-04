@@ -47,4 +47,11 @@ class AlarmManageController(val alarmManageService: AlarmManageService) {
         val res = alarmManageService.deleteAlarmByIds(alarmIds)
         return okOf(res)
     }
+
+    @Operation(summary = "获取今日告警统计信息")
+    @GetMapping("/alarm/summary")
+    fun getAlarmSummary():RestValue<AlarmSummary> {
+        val res = alarmManageService.getAlarmSummary()
+        return okOf(res)
+    }
 }

@@ -1,5 +1,6 @@
 package com.lgguan.iot.position.service
 
+import arrow.core.flatMap
 import cn.hutool.core.date.DateUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.lgguan.iot.position.bean.*
@@ -36,5 +37,50 @@ class AlarmManageService(val alarmInfoService: IAlarmInfoService) {
 
     fun deleteAlarmByIds(alarmIds: Array<Long>): Boolean {
         return alarmInfoService.removeByIds(alarmIds.toList())
+    }
+
+    fun getAlarmSummary(): AlarmSummary {
+        val date = DateUtil.date()
+        val startTime = DateUtil.beginOfDay(date).time / 1000
+        val endTime = DateUtil.endOfDay(date).time / 1000
+        val alarmInfos = alarmInfoService.list(
+            KtQueryWrapper(AlarmInfo::class.java)
+                .between(AlarmInfo::createTime, startTime, endTime)
+        )
+
+        val total = alarmInfos.size
+        val statusMap = alarmInfos.groupBy { it.status }
+            .flatMap {
+                mapOf(it.key to it.value.size)
+            }.let {
+                val statusMap = mutableMapOf<AlarmStatus, Int>()
+                AlarmStatus.values().forEach { alarmStatus ->
+                    statusMap[alarmStatus] = it[alarmStatus] ?: 0
+                }
+                statusMap
+            }
+
+        val alarmRanks = alarmInfos.groupBy { it.deviceId }
+            .map {
+                it.key to it.value.size
+            }.sortedBy {
+                it.second
+            }.reversed()
+            .mapIndexed { index, pair ->
+                AlarmRank(index + 1, pair.first!!, pair.second)
+            }.take(5)
+
+        val alarmRatio = alarmInfos.groupBy { it.type }
+            .flatMap {
+                mapOf(it.key to it.value.size)
+            }.let {
+                val alarmRatio = mutableMapOf<AlarmType, Int>()
+                AlarmType.values().forEach { alarmType ->
+                    alarmRatio[alarmType] = it[alarmType] ?: 0
+                }
+                alarmRatio
+            }
+
+        return AlarmSummary(total, statusMap, alarmRanks, alarmRatio)
     }
 }
