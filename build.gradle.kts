@@ -11,6 +11,13 @@ group = "com.lgguan.iot"
 version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
+tasks.register("saveVersion") {
+    doLast {
+        File("version.txt").writeText(version.toString())
+    }
+}
+
+
 repositories {
     mavenCentral()
 }
@@ -54,3 +61,12 @@ tasks.withType<Test> {
 tasks.getByName("jar") {
     enabled = false
 }
+
+//remotes {
+//    webServer {
+//        role 'appServer'
+//        hostname 'your-server-hostname'
+//        username 'your-ssh-username'
+//        privateKey file('path/to/your/private/key')
+//    }
+//}
