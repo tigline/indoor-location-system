@@ -20,7 +20,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                sh './gradlew build'
+                sh './gradlew clean build'
             }
         }
         stage('Deploy') {
