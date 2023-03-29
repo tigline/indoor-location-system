@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        jdk 'jdk-17'
+    }
     environment {
         VERSION = ''
         JAR_FILE_NAME = ''
