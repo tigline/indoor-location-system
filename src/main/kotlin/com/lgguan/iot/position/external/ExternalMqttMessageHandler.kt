@@ -51,6 +51,7 @@ class ExternalMqttMessageHandler(val externalFenceHandler: ExternalFenceHandler)
                     }.updateById()
                     aoaDataInfo.type = beaconInfo.type
                     aoaDataInfo.mapId = beaconInfo.mapId
+                    aoaDataInfo.status = if (beaconInfo.motion == "freezing") 0 else 1
                     aoaDataInfo.insert()
                     CoroutineScope(Dispatchers.IO).launch {
                         sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))

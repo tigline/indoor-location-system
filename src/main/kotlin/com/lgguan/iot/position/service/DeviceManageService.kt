@@ -187,6 +187,32 @@ class DeviceManageService(
         )
     }
 
+    fun listBeaconLocationWithMovingAverage(param: QueryBeaconLocationParam): List<AoaDataInfo> {
+        val rawList = aoaDataInfoService.list(
+            KtQueryWrapper(AoaDataInfo::class.java) //.eq(AoaDataInfo::status,1)
+                .eq(AoaDataInfo::mapId, param.mapId)
+                .eq(!param.deviceId.isNullOrEmpty(), AoaDataInfo::deviceId, param.deviceId)
+                .between(AoaDataInfo::timestamp, param.startTime, param.endTime)
+                .orderByAsc(AoaDataInfo::timestamp)
+        )
+        val windowSize = param.filterValue ?: 0
+        val filteredList = mutableListOf<AoaDataInfo>()
+        for (i in windowSize until rawList.size - windowSize) {
+            val subList = rawList.subList(i - windowSize, i + windowSize + 1)
+            val avgPosX = subList.map { it.posX ?: 0f }.sum() / subList.size
+            val avgPosY = subList.map { it.posY ?: 0f }.sum() / subList.size
+            val filteredInfo = AoaDataInfo()
+            filteredInfo.copyFrom(rawList[i])
+            filteredInfo.deviceId = param.deviceId
+            filteredInfo.mapId = param.mapId
+            filteredInfo.posX = avgPosX
+            filteredInfo.posY = avgPosY
+            filteredInfo.timestamp = subList.last().timestamp
+            filteredList.add(filteredInfo)
+        }
+        return filteredList.filter { it.status == 1 }
+    }
+
     fun getBeaconOnlineStatusCounts(
         mapId: String?,
         type: BeaconType?,

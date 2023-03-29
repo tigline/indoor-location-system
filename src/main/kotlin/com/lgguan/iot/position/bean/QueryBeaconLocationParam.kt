@@ -9,5 +9,8 @@ data class QueryBeaconLocationParam(
     val startTime: Long,
     @field:Schema(required = true)
     val endTime: Long,
-    val deviceId: String? = null
+
+    val deviceId: String ? = null,
+
+    var filterValue:Int ? = 0
 )

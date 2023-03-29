@@ -104,7 +104,7 @@ class DeviceManageController(val deviceManageService: DeviceManageService) {
     @Operation(summary = "获取标签轨迹")
     @GetMapping("/location")
     fun listBeaconLocation(@Valid @ParameterObject param: QueryBeaconLocationParam): RestValue<List<AoaDataInfo>> {
-        val location = deviceManageService.listBeaconLocation(param)
+        val location = deviceManageService.listBeaconLocationWithMovingAverage(param)
         return okOf(location)
     }
 

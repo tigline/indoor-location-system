@@ -22,4 +22,16 @@ class AoaDataInfo: Model<AoaDataInfo>() {
     var posX: Float? = null
     var posY: Float? = null
     var timestamp: Long? = null
+    var status:Int? = null  //0:freezing 1:moving
+
+    fun copyFrom(other: AoaDataInfo) {
+        id = other.id
+        deviceId = other.deviceId
+        type = other.type
+        mapId = other.mapId
+        optScale = other.optScale
+        posX = other.posX
+        posY = other.posY
+        timestamp = other.timestamp
+    }
 }
