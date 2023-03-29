@@ -4,8 +4,8 @@ pipeline {
         jdk 'jdk-17'
     }
     environment {
-        VERSION = ''
-        JAR_FILE_NAME = ''
+        VERSION = '1.1.0'
+        JAR_FILE_NAME = 'indoor-positioning-system-1.0.0.jar'
     }
     stages {
         stage('Get Version') {
