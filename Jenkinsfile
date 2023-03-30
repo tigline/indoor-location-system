@@ -14,7 +14,7 @@ pipeline {
                 sh './gradlew saveVersion'
                 script {
                     VERSION = readFile('version.txt').trim()
-                    JAR_FILE_NAME = "indoor-positioning-system-${env.VERSION}.jar"
+                    JAR_FILE_NAME = "indoor-positioning-system-${VERSION}.jar"
                 }
                 echo "Version: ${VERSION}"
                 echo "JAR_FILE_NAME: ${JAR_FILE_NAME}"
