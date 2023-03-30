@@ -29,9 +29,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying to AWS EC2...'
-                echo  "JAR_NAME: ${JAR_FILE_NAME}..."
+                echo  "JAR_NAME: ${env.JAR_FILE_NAME}..."
                 sshagent(credentials: ['awsserver']) {
-                    sh "scp -o StrictHostKeyChecking=no -i /var/jenkins_home/helloindoor_2.pem build/libs/${JAR_FILE_NAME} ubuntu@13.112.168.219:/home/ubuntu/ips"
+                    sh "scp -o StrictHostKeyChecking=no -i /var/jenkins_home/helloindoor_2.pem build/libs/${env.JAR_FILE_NAME} ubuntu@13.112.168.219:/home/ubuntu/ips"
                     sh "ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/helloindoor_2.pem ubuntu@13.112.168.219 'chmod +x /home/ubuntu/ips/deploy.sh && /home/ubuntu/ips/deploy.sh'"
                 }
             }
