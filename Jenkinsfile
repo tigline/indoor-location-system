@@ -4,8 +4,8 @@ pipeline {
         jdk 'jdk-17'
     }
     environment {
-        VERSION = '1.0.0'
-        JAR_FILE_NAME = 'indoor-positioning-system-1.0.0.jar'
+        VERSION = ''
+        JAR_FILE_NAME = ''
     }
     stages {
         stage('Get Version') {
@@ -13,12 +13,11 @@ pipeline {
                 echo 'Getting the version...'
                 sh './gradlew saveVersion'
                 script {
-                    env.VERSION = '1.0.1'
-                    //env.VERSION = readFile('version.txt').trim()
+                    env.VERSION = 1.0.2//readFile('version.txt').trim()
                     env.JAR_FILE_NAME = "indoor-positioning-system-${env.VERSION}.jar"
-                    echo "Version: ${env.VERSION}"
-                    echo "JAR_FILE_NAME: ${env.JAR_FILE_NAME}"
                 }
+                echo "Version: ${env.VERSION}"
+                echo "JAR_FILE_NAME: ${env.JAR_FILE_NAME}"
             }
         }
         stage('Build') {
