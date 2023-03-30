@@ -12,6 +12,7 @@ version = "1.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.register("saveVersion") {
+    println("saveVersion: $version")
     doLast {
         File("version.txt").writeText(version.toString())
     }
