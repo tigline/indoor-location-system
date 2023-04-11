@@ -31,8 +31,8 @@ pipeline {
                 echo 'Deploying to Aliyun ECS...'
                 echo  "JAR_NAME: ${JAR_FILE_NAME}..."
                 sshagent(credentials: ['aliyun-key']) {
-                    sh "scp -o StrictHostKeyChecking=no -i /var/jenkins_home/locationkey.pem build/libs/${JAR_FILE_NAME} ubuntu@8.217.20.176:/home/ecs-assist-user/ips"
-                    sh "ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/locationkey.pem ubuntu@8.217.20.176 'chmod +x /home/ecs-assist-user/ips/deploy.sh && /home/ecs-assist-user/ips/deploy.sh'"
+                    sh "scp -o StrictHostKeyChecking=no -i /var/jenkins_home/helloindoor_2.pem build/libs/${JAR_FILE_NAME} ubuntu@8.217.20.176:/home/ecs-assist-user/ips"
+                    sh "ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/helloindoor_2.pem ubuntu@8.217.20.176 'chmod +x /home/ecs-assist-user/ips/deploy.sh && /home/ecs-assist-user/ips/deploy.sh'"
                 }
             }
         }
