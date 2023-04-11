@@ -223,7 +223,7 @@ class DeviceManageService(
         val windowSize = param.filterValue ?: 0
         val filteredList = mutableListOf<AoaDataInfo>()
         for (i in windowSize until preprocessedList.size - windowSize) {
-            val subList = rawList.subList(i - windowSize, i + windowSize + 1)
+            val subList = preprocessedList.subList(i - windowSize, i + windowSize + 1)
             val avgPosX = subList.map { it.posX ?: 0f }.sum() / subList.size
             val avgPosY = subList.map { it.posY ?: 0f }.sum() / subList.size
             val filteredInfo = AoaDataInfo()
