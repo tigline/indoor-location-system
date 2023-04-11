@@ -28,11 +28,11 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying to AWS EC2...'
+                echo 'Deploying to Aliyun ECS...'
                 echo  "JAR_NAME: ${JAR_FILE_NAME}..."
-                sshagent(credentials: ['awsserver']) {
-                    sh "scp -o StrictHostKeyChecking=no -i /var/jenkins_home/helloindoor_2.pem build/libs/${JAR_FILE_NAME} ubuntu@13.112.168.219:/home/ubuntu/ips"
-                    sh "ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/helloindoor_2.pem ubuntu@13.112.168.219 'chmod +x /home/ubuntu/ips/deploy.sh && /home/ubuntu/ips/deploy.sh'"
+                sshagent(credentials: ['aliyun-key']) {
+                    sh "scp -o StrictHostKeyChecking=no -i /var/jenkins_home/locationkey.pem build/libs/${JAR_FILE_NAME} ubuntu@8.217.20.176:/home/ecs-assist-user/ips"
+                    sh "ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/locationkey.pem ubuntu@8.217.20.176 'chmod +x /home/ecs-assist-user/ips/deploy.sh && /home/ecs-assist-user/ips/deploy.sh'"
                 }
             }
         }
