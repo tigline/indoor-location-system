@@ -210,7 +210,7 @@ class DeviceManageService(
             filteredInfo.timestamp = subList.last().timestamp
             filteredList.add(filteredInfo)
         }
-        return filteredList.filter { it.status == 0 }
+        return filteredList
     }
 
     fun getBeaconOnlineStatusCounts(
