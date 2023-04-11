@@ -195,14 +195,39 @@ class DeviceManageService(
                 .between(AoaDataInfo::timestamp, param.startTime, param.endTime)
                 .orderByAsc(AoaDataInfo::timestamp)
         )
+
+        //
+        val sampledList = mutableListOf<AoaDataInfo>()
+
+        for (i in rawList.indices step 2) {
+            sampledList.add(rawList[i])
+        }
+
+        // 去除status为0的数据
+        val preprocessedList = mutableListOf<AoaDataInfo>()
+        var lastIndex = -1
+        for (i in sampledList.indices) {
+            if (sampledList[i].status == 0) {
+                lastIndex = i
+            } else {
+                if (lastIndex != -1) {
+                    preprocessedList.add(sampledList[lastIndex])
+                    lastIndex = -1
+                }
+                preprocessedList.add(sampledList[i])
+            }
+        }
+
+
+        // 滑动窗口滤波
         val windowSize = param.filterValue ?: 0
         val filteredList = mutableListOf<AoaDataInfo>()
-        for (i in windowSize until rawList.size - windowSize) {
+        for (i in windowSize until preprocessedList.size - windowSize) {
             val subList = rawList.subList(i - windowSize, i + windowSize + 1)
             val avgPosX = subList.map { it.posX ?: 0f }.sum() / subList.size
             val avgPosY = subList.map { it.posY ?: 0f }.sum() / subList.size
             val filteredInfo = AoaDataInfo()
-            filteredInfo.copyFrom(rawList[i])
+            filteredInfo.copyFrom(preprocessedList[i])
             filteredInfo.deviceId = param.deviceId
             filteredInfo.mapId = param.mapId
             filteredInfo.posX = avgPosX
