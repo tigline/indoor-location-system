@@ -197,24 +197,24 @@ class DeviceManageService(
         )
 
         //
-        val sampledList = mutableListOf<AoaDataInfo>()
-
-        for (i in rawList.indices step 2) {
-            sampledList.add(rawList[i])
-        }
+//        val sampledList = mutableListOf<AoaDataInfo>()
+//
+//        for (i in rawList.indices step 2) {
+//            sampledList.add(rawList[i])
+//        }
 
         // 去除status为0的数据
         val preprocessedList = mutableListOf<AoaDataInfo>()
         var lastIndex = -1
-        for (i in sampledList.indices) {
-            if (sampledList[i].status == 0) {
+        for (i in rawList.indices) {
+            if (rawList[i].status == 0) {
                 lastIndex = i
             } else {
                 if (lastIndex != -1) {
-                    preprocessedList.add(sampledList[lastIndex])
+                    preprocessedList.add(rawList[lastIndex])
                     lastIndex = -1
                 }
-                preprocessedList.add(sampledList[i])
+                preprocessedList.add(rawList[i])
             }
         }
 
