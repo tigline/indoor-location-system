@@ -1,0 +1,65 @@
+server:
+  port: 9050
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.107.124.166:3306/ips?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
+    username: lgguan
+    password: Lgguan@2023
+
+  rabbitmq:
+    host: 119.91.146.62
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    publisher-confirm-type: CORRELATED
+    max-retry: 3
+    connection-timeout: 2000
+    listener:
+      simple:
+        acknowledge-mode: manual
+      direct:
+        acknowledge-mode: manual
+    cache:
+      connection:
+        mode: CONNECTION
+        size: 16
+    exchange:
+      direct-exchange: direct-exchange
+    queueName:
+      device-queue: device.data.queue
+    routingKey:
+      device-key: device.data.key
+
+#mqtt:
+#  url: tcp://127.0.0.1:1883
+#  client-id: ${random.uuid}
+#  username: lgguan
+#  password: Lgguan@2023
+#  subscribe-topics:
+#    - /ips/pub/AOA_data
+#    - /ips/pub/station_online_status
+#    - /ips/pub/AOA_Station_His
+
+external:
+  url: http://127.0.0.1:8888/
+
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+  writer-with-order-by-keys: true
+
+knife4j:
+  enable: true
+  setting:
+    enable-dynamic-parameter: true
+    enable-swagger-models: false
+    enable-footer: false
+
+mybatis-plus:
+  type-handlers-package: com.lgguan.iot.position.mapper.handler
+  global-config:
+    db-config:
+      update-strategy: ignored

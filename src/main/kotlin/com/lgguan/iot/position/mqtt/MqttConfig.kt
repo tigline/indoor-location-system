@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration
  *
  * @author N.Liu
  **/
-@Configuration
-@ConfigurationProperties(prefix = "mqtt")
+//@Configuration
+//@ConfigurationProperties(prefix = "mqtt")
 class MqttConfig {
     lateinit var url: String
     lateinit var clientId: String

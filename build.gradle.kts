@@ -38,6 +38,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
     implementation("cn.hutool:hutool-all:5.8.11")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
+    implementation("com.rabbitmq:amqp-client:5.9.0")
     implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.0.0")
     implementation("org.springdoc:springdoc-openapi-kotlin:1.6.14")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")

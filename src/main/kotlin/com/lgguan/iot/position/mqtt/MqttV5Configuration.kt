@@ -15,7 +15,7 @@ import org.springframework.messaging.Message
 import org.springframework.messaging.MessageChannel
 
 
-@Configuration
+//@Configuration
 class MqttV5Configuration(val mqttConfig: MqttConfig, val messageHandler: ExternalMqttMessageHandler) {
     private val log = LoggerFactory.getLogger(javaClass)
 
