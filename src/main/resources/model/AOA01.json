@@ -1,0 +1,733 @@
+{
+    "profile": {
+        "model": "AOA01",
+        "version": "1.0",
+        "config conditions": [
+            "report_timer>gnss_timer+2*60",
+            "sleep_timer>gnss_timer+2*60"
+        ]
+    },
+    "properties": [
+        {
+            "identifier": "sn",
+            "title": "Serial Number",
+            "description": "Device Serial Number",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "string"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            },
+            "deviceMaps": {
+
+            }
+        },
+        {
+            "identifier": "time",
+            "title": "Time",
+            "description": "Data Generation Time",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "time"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "battery",
+            "title": "Battery",
+            "description": "The percentage of the remaining battery",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "float",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": "%",
+                    "accuracy": null
+                }
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "gpsLocating",
+            "title": "Location Mode",
+            "description": "Location Mode (-1: Unknown, 0: LBS, 1: GNSS)",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": null,
+                    "accuracy": null
+                }
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "ipaddr",
+            "title": "IP Addr",
+            "description": "IP Address of Connection",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "string"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "lac",
+            "title": "Area Code",
+            "description": "Location Area Code",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": null,
+                    "accuracy": null
+                }
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "location",
+            "title": "Geolocation",
+            "description": "Geolocation, normally including latitude and longitude, altitude and radius are optional and specified in meters",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "location"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "mcc",
+            "title": "Country Code",
+            "description": "Mobile Country Code",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": null,
+                    "accuracy": null
+                }
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "mnc",
+            "title": "Network Code",
+            "description": "Mobile Network Code",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": null,
+                    "accuracy": null
+                }
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "net",
+            "title": "Cellular Network Type",
+            "description": "Cellular Network Type (NO_SERVICE, LTE_WIDEBAND, LTE_M1, LTE_NB, UTMS, NR, UNKNOWN)",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "string"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "power",
+            "title": "Charging Status",
+            "description": "Charging Status",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "enum",
+                "definition": {
+                    "enum descriptions": {
+                        "0": "Discharging",
+                        "1": "Charging"
+                    }
+                }
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "phone",
+            "title": "eSIM phone",
+            "description": "eSIM phone",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "string"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": false,
+                "store": true
+            }
+        },
+        {
+            "identifier": "iccid",
+            "title": "SIM ICCID Number",
+            "description": "SIM ICCID Number",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "string"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "imei",
+            "title": "Network Module IMEI Number",
+            "description": "Network Module IMEI Number",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "string"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "model",
+            "title": "Model",
+            "description": "Model",
+            "category": "schema",
+            "display": true,
+            "specification": {
+                "type": "string"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "dataType",
+            "title": "Data Type",
+            "description": "Type of Data: Real-time, Delayed (1: Real-time, 0: Delayed)",
+            "category": "schema",
+            "display": false,
+            "specification": {
+                "type": "boolean",
+                "definition": {
+                    "boolean descriptions": {
+                        "0": "Delayed",
+                        "1": "Real-time"
+                    }
+                }
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "report_deposit_time",
+            "title": "Report Deposit Time",
+            "description": "Report Deposit Time",
+            "category": "schema",
+            "display": false,
+            "specification": {
+                "type": "time"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "systemTime",
+            "title": "System Time",
+            "description": "System Processing Time",
+            "category": "schema",
+            "display": false,
+            "specification": {
+                "type": "time"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "ver",
+            "title": "Protocol Version",
+            "description": "The Protocol Version (Default 1.1)",
+            "category": "schema",
+            "display": false,
+            "specification": {
+                "type": "string"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "gnss_location",
+            "title": "GNSS Location",
+            "description": "Last Known GNSS Location, normally including latitude and longitude, altitude and radius are optional and specified in meters",
+            "category": "schema",
+            "display": false,
+            "specification": {
+                "type": "location"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        },
+        {
+            "identifier": "gtime",
+            "title": "GNSS Time",
+            "description": "Last Known GNSS Time",
+            "category": "schema",
+            "display": false,
+            "specification": {
+                "type": "time"
+            },
+            "settings": {
+                "enable": true,
+                "overwrite": true,
+                "store": true
+            }
+        }
+    ],
+    "configs": [
+        {
+            "identifier": "mode",
+            "title": "Mode",
+            "description": "Work Mode",
+            "category": "config",
+            "specification": {
+                "type": "enum",
+                "definition": {
+                    "enum descriptions": {
+                        "0": "Periodic",
+                        "1": "Always On"
+                    }
+                }
+            },
+            "validation": {
+                "default": "1",
+                "method": "option",
+                "check": null,
+                "category detail": "{\"name\": \"working_mode_option\", \"title\": \"Working Mode Option\"}"
+            }
+        },
+        {
+            "identifier": "heartbeat_timer",
+            "title": "Heartbeat timer",
+            "description": "<p>MQTT Keepalive timer, <p>specified in seconds (s), default 300s/5min.",
+            "category": "config",
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": "s",
+                    "accuracy": null
+                }
+            },
+            "validation": {
+                "default": "300",
+                "method": "area",
+                "check": "{\"min\":120,\"max\":3600}",
+                "category detail": "{\"name\": \"heartbeat_settings\", \"title\": \"Heartbeat\"}"
+            }
+        },
+        {
+            "identifier": "report_timer",
+            "title": "Report Interval",
+            "description": "<p>Reporting interval when the terminal is externally powered,</p><p>specified in seconds (s), default 900s/15min.</p>",
+            "category": "config",
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": "s",
+                    "accuracy": null
+                }
+            },
+            "validation": {
+                "default": "900",
+                "method": "area",
+                "check": "{\"min\":30,\"max\":1814400}",
+                "category detail": "{\"name\": \"ac_power_mode_settings\", \"title\": \"AC Power Mode\"}"
+            }
+        },
+        {
+            "identifier": "sleep_timer",
+            "title": "Sleep Interval",
+            "description": "<p>Sleep interval when the terminal is externally powered,</p><p>specified in seconds (s), default 21600s/360min/6h.</p>",
+            "category": "config",
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": "s",
+                    "accuracy": null
+                }
+            },
+            "validation": {
+                "default": "21600",
+                "method": "area",
+                "check": "{\"min\":30,\"max\":1814400}",
+                "category detail": "{\"name\": \"ac_power_mode_settings\", \"title\": \"AC Power Mode\"}"
+            }
+        },
+        {
+            "identifier": "gnss_timer",
+            "title": "Positioning Interval",
+            "description": "<p>Positioning interval for GNSS,</p><p>specified in seconds (s), default 120s/2min.</p><p>Its limit is: [ 120 seconds, 300 seconds ].</p>",
+            "category": "config",
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": "s",
+                    "accuracy": null
+                }
+            },
+            "validation": {
+                "default": "120",
+                "method": "area",
+                "check": "{\"min\":120,\"max\":300}",
+                "category detail": "{\"name\": \"positioning_settings\", \"title\": \"Positioning\"}"
+            }
+        },
+        {
+            "identifier": "locate",
+            "title": "Positioning Mode Definition",
+            "description": "<p>Positioning Mode Definition, default null,</p><p>which means to switch off positioning feature.</p>",
+            "category": "config",
+            "specification": {
+                "type": "enum",
+                "definition": {
+                    "enum descriptions": {
+                        "5": "GNSS"
+                    }
+                }
+            },
+            "validation": {
+                "default": null,
+                "method": "checkbox",
+                "check": null,
+                "category detail": "{\"name\": \"positioning_settings\", \"title\": \"Positioning\"}"
+            }
+        },
+        {
+            "identifier": "tmin",
+            "title": "Minimum Retry Timer",
+            "description": "<p>Minimum retry timer,</p><p>specified in seconds (s), default 5s.</p>",
+            "category": "config",
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": "s",
+                    "accuracy": null
+                }
+            },
+            "validation": {
+                "default": "5",
+                "method": "area",
+                "check": "{\"min\":1,\"max\":1814400}",
+                "category detail": "{\"name\": \"retry_settings\", \"title\": \"Retry\"}"
+            }
+        },
+        {
+            "identifier": "tmax",
+            "title": "Maximum Retry Timer",
+            "description": "<p>Maximum retry timer,</p><p>specified in seconds (s), default 3600s/60min/1h.</p>",
+            "category": "config",
+            "specification": {
+                "type": "int",
+                "definition": {
+                    "min": null,
+                    "max": null,
+                    "unit": "s",
+                    "accuracy": null
+                }
+            },
+            "validation": {
+                "default": "3600",
+                "method": "area",
+                "check": "{\"min\":1,\"max\":1814400}",
+                "category detail": "{\"name\": \"retry_settings\", \"title\": \"Retry\"}"
+            }
+        }
+    ],
+    "events": [
+        {
+            "identifier": "事件唯一标识符（物模型模块下唯一，其中post是默认生成的属性上报事件）。",
+            "title": "事件名称。",
+            "desc": "事件描述。",
+            "type": "事件类型（info、alert、error）。",
+            "required": "是否是标准功能的必选事件：是（true），否（false）。",
+            "outputData": [
+                {
+                    "identifier": "参数唯一标识符。",
+                    "title": "参数名称。",
+                    "dataType": {
+                        "type": "属性类型: int（原生）、float（原生）、double（原生）、text（原生）、date（String类型UTC毫秒）、bool（0或1的int类型）、enum（int类型，枚举项定义方法与bool类型定义0和1的值方法相同）、struct（结构体类型，可包含前面7种类型，下面使用\"specs\":[{}]描述包含的对象）、array（数组类型，支持int、double、float、text、struct）。",
+                        "specs": {
+                            "min": "参数最小值（int、float、double类型特有）。",
+                            "max": "参数最大值（int、float、double类型特有）。",
+                            "unit": "属性单位（int、float、double类型特有，非必填）。",
+                            "unitName": "单位名称（int、float、double类型特有，非必填）。",
+                            "size": "数组元素的个数，最大512（array类型特有）。",
+                            "step": "步长（text、enum类型无此参数）。",
+                            "length": "数据长度，最大10240（text类型特有）。",
+                            "0": "0的值（bool类型特有）。",
+                            "1": "1的值（bool类型特有）。",
+                            "item": {
+                                "type": "数组元素的类型（array类型特有）。"
+                            }
+                        }
+                    }
+                }
+            ],
+            "method": "事件对应的方法名称（根据identifier生成）。"
+        },
+        {
+            "identifier": "事件唯一标识符（物模型模块下唯一，其中post是默认生成的属性上报事件）。",
+            "title": "事件名称。",
+            "desc": "事件描述。",
+            "type": "事件类型（info、alert、error）。",
+            "required": "是否是标准功能的必选事件：是（true），否（false）。",
+            "outputData": [
+                {
+                    "identifier": "参数唯一标识符。",
+                    "title": "参数名称。",
+                    "dataType": {
+                        "type": "属性类型: int（原生）、float（原生）、double（原生）、text（原生）、date（String类型UTC毫秒）、bool（0或1的int类型）、enum（int类型，枚举项定义方法与bool类型定义0和1的值方法相同）、struct（结构体类型，可包含前面7种类型，下面使用\"specs\":[{}]描述包含的对象）、array（数组类型，支持int、double、float、text、struct）。",
+                        "specs": {
+                            "min": "参数最小值（int、float、double类型特有）。",
+                            "max": "参数最大值（int、float、double类型特有）。",
+                            "unit": "属性单位（int、float、double类型特有，非必填）。",
+                            "unitName": "单位名称（int、float、double类型特有，非必填）。",
+                            "size": "数组元素的个数，最大512（array类型特有）。",
+                            "step": "步长（text、enum类型无此参数）。",
+                            "length": "数据长度，最大10240（text类型特有）。",
+                            "0": "0的值（bool类型特有）。",
+                            "1": "1的值（bool类型特有）。",
+                            "item": {
+                                "type": "数组元素的类型（array类型特有）。"
+                            }
+                        }
+                    }
+                }
+            ],
+            "method": "事件对应的方法名称（根据identifier生成）。"
+        }
+    ],
+    "commands": [
+        {
+            "identifier": "shutdown",
+            "title": "Shutdown",
+            "description": "Shutdown the device remotely",
+            "category": "command",
+            "specification": {
+                "type": "gateway",
+                "definition": {
+                    "input parameters": []
+                }
+            },
+            "settings": {
+                "enable": true,
+                "ack": false
+            }
+        },
+        {
+            "identifier": "restart",
+            "title": "Restart",
+            "description": "Restart the device remotely",
+            "category": "command",
+            "specification": {
+                "type": "gateway",
+                "definition": {
+                    "input parameters": []
+                }
+            },
+            "settings": {
+                "enable": true,
+                "ack": false
+            }
+        },
+        {
+            "identifier": "reset",
+            "title": "Reset",
+            "description": "Reset the device remotely",
+            "category": "command",
+            "specification": {
+                "type": "gateway",
+                "definition": {
+                    "input parameters": []
+                }
+            },
+            "settings": {
+                "enable": true,
+                "ack": false
+            }
+        },
+        {
+            "identifier": "snapshot",
+            "title": "Get Report Snapshot",
+            "description": "Get device report remotely",
+            "category": "command",
+            "specification": {
+                "type": "gateway",
+                "definition": {
+                    "input parameters": []
+                }
+            },
+            "settings": {
+                "enable": true,
+                "ack": false
+            }
+        },
+        {
+            "identifier": "report",
+            "title": "Get Report",
+            "description": "Get device report remotely",
+            "category": "command",
+            "specification": {
+                "type": "gateway",
+                "definition": {
+                    "input parameters": []
+                }
+            },
+            "settings": {
+                "enable": true,
+                "ack": false
+            }
+        },
+        {
+            "identifier": "passthrough",
+            "title": "Send Passthrough",
+            "description": "Send passthrough payload to the device",
+            "category": "command",
+            "specification": {
+                "type": "gateway",
+                "definition": {
+                    "input parameters": [
+                        {
+                            "identifier": "p2",
+                            "title": "Payload",
+                            "description": "Payload",
+                            "required": true,
+                            "specification": {
+                                "type": "string",
+                                "definition": {
+                                    "regex check": "^([0-9A-Fa-f][0-9A-Fa-f]){1,2560}$",
+                                    "helper text": "A string contains only letters A(a) to F(f) and numbers within the length of 5120"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "settings": {
+                "enable": true,
+                "ack": false
+            }
+        },
+        {
+            "identifier": "updatePos",
+            "title": "Get Location",
+            "description": "Get device location remotely",
+            "category": "command",
+            "specification": {
+                "type": "gateway",
+                "definition": {
+                    "input parameters": []
+                }
+            },
+            "settings": {
+                "enable": true,
+                "ack": false
+            }
+        }
+    ]
+}

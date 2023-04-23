@@ -48,6 +48,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.apache.commons:commons-lang3:3.1")
+    implementation("commons-io:commons-io:2.1")
+    implementation("commons-lang:commons-lang:2.6")
+    implementation("commons-beanutils:commons-beanutils:1.9.4")
 }
 
 tasks.withType<KotlinCompile> {
