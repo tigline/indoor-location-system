@@ -335,3 +335,39 @@ alter table alarm_info
 alter table alarm_info
     add point varchar(200) null after status;
 
+-- 2023-04-28
+CREATE TABLE `t_company`
+(
+      `company_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '公司ID',
+      `company_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公司编码',
+      `company_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '企业名称',
+      `simple_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '企业别名',
+      `contact_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系人',
+      `contact_phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系人电话',
+      `begin_create_time` timestamp(0) NULL DEFAULT NULL COMMENT '开通日期',
+      `active` tinyint(2) NULL DEFAULT 1 COMMENT '1有效，0无效',
+      `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+      `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+      PRIMARY KEY (`company_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+alter table building_info
+    add company_id int(11) null after building_id;
+
+DROP TABLE IF EXISTS `t_model`;
+CREATE TABLE `t_model`
+(
+    `model_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'model_id',
+    `model_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '物模型名',
+    `model_version` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '物模型版本',
+    `company_id` int(11) NULL DEFAULT NULL COMMENT '所属公司id',
+    `properties` json NULL COMMENT '屬性',
+    `configs` json NULL COMMENT '配置',
+    `events` json NULL COMMENT '事件',
+    `commands` json NULL COMMENT '指令',
+    `active` tinyint(1) NULL DEFAULT 1 COMMENT '1有效，0无效',
+    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+    `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`model_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
