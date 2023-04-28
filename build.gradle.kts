@@ -39,7 +39,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
     implementation("cn.hutool:hutool-all:5.8.11")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
-    implementation("com.rabbitmq:amqp-client:5.9.0")
+    implementation("com.rabbitmq:amqp-client:5.16.0")
     implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.0.0")
     implementation("org.springdoc:springdoc-openapi-kotlin:1.6.14")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
@@ -48,10 +48,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    implementation("org.apache.commons:commons-lang3:3.1")
-    implementation("commons-io:commons-io:2.1")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("commons-io:commons-io:2.11.0")
     implementation("commons-lang:commons-lang:2.6")
     implementation("commons-beanutils:commons-beanutils:1.9.4")
+    implementation("com.google.guava:guava:31.1-jre")
 }
 
 tasks.withType<KotlinCompile> {
