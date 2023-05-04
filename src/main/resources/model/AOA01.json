@@ -215,7 +215,7 @@
             "description": "Cellular Signal Strength, specified in decibel-milliwatts",
             "category": "schema",
             "display": true,
-            "dataType": {
+            "specification": {
                 "type": "int",
                 "definition": {
                     "min": null,
@@ -236,7 +236,7 @@
             "description": "Speed, specified in meters per second",
             "category": "schema",
             "display": true,
-            "dataType": {
+            "specification": {
                 "type": "float",
                 "definition": {
                     "min": null,
@@ -257,7 +257,7 @@
             "description": "Wi-Fi State",
             "category": "schema",
             "display": true,
-            "dataType": {
+            "specification": {
                 "type": "enum",
                 "definition": {
                     "enum descriptions": {
@@ -279,7 +279,7 @@
             "description": "Wifi List",
             "category": "schema",
             "display": false,
-            "dataType": {
+            "specification": {
                 "type": "JSON string"
             },
             "settings": {
@@ -427,7 +427,7 @@
             "title": "MQTT Connection",
             "description": "MQTT Connection",
             "category": "config",
-            "dataType": {
+            "specification": {
                 "type": "object",
                 "definition": {
                     "object definition": [
@@ -604,7 +604,7 @@
             "title": "Geofence",
             "description": "Geofence event, triggered when the device crosses the geofence",
             "category": "DEVICE",
-            "dataType": {
+            "specification": {
                 "type": "every-time",
                 "definition": {
                     "level": "Critical",
@@ -624,7 +624,7 @@
             "title": "Device Low Battery Alarm",
             "description": "Device low battery alarm, triggered when the battery of the device is too low",
             "category": "DEVICE",
-            "dataType": {
+            "specification": {
                 "type": "reverse",
                 "definition": {
                     "output parameters": [
