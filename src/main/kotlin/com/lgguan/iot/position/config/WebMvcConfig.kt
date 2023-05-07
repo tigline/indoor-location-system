@@ -17,6 +17,6 @@ class WebMvcConfig(private val authInterceptor: AuthInterceptor, private val req
         registry.addInterceptor(requestLogInterceptor)
         registry.addInterceptor(authInterceptor)
             .excludePathPatterns("/api/v1/register", "/api/v1/login", "/api/v1/refreshToken", "/test/**",
-                "/v3/api-docs/**", "/doc.html", "/swagger-ui/**", "/webjars/**", "/favicon.ico")
+                "/v3/api-docs/**", "/doc.html", "/swagger-ui/**", "/webjars/**", "/favicon.ico", "/api/v1/model/device")
     }
 }

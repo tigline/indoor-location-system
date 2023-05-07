@@ -8,6 +8,7 @@ import com.lgguan.iot.position.entity.Model
 import com.lgguan.iot.position.entity.ModelProperties
 import com.lgguan.iot.position.mapper.IModelMapper
 import com.lgguan.iot.position.util.objectMapper
+import org.springframework.stereotype.Service
 import java.util.*
 
 
@@ -18,7 +19,7 @@ interface IModelService: IService<Model> {
     fun updateModelActive(modelId: String, active: Boolean): RestValue<Boolean>
 }
 
-
+@Service
 class ModelService: IModelService, ServiceImpl<IModelMapper, Model>() {
 
     override fun addModel(addModel: AddOrUpdateModel): RestValue<Boolean> {
