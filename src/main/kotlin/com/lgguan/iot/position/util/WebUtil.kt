@@ -16,4 +16,8 @@ fun getRequest() =
 fun HttpServletRequest.getToken() = this.getHeader("Authorization")?.replaceFirst(BEARER_PREFIX, "")
 fun getToken() = getRequest().getToken()
 
+fun HttpServletRequest.getApiKey(): String = this.getHeader("api_key")
+
+fun getApiKey() = getRequest().getApiKey()
+
 fun getRole() = tokenCache.getIfPresent(getToken())?.role

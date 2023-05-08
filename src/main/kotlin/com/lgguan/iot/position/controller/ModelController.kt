@@ -1,7 +1,7 @@
 package com.lgguan.iot.position.controller
 
-import cn.hutool.json.JSONUtil
 import com.lgguan.iot.position.bean.*
+import com.lgguan.iot.position.service.ModelManageService
 import com.lgguan.iot.position.service.ModelService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 @Tag(name = "模型管理")
 @RestController
 @RequestMapping("/api/v1")
-class ModelController(val modelService: ModelService) {
+class ModelController(val modelService: ModelService, var modelManageService: ModelManageService) {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
@@ -49,17 +49,6 @@ class ModelController(val modelService: ModelService) {
     @Operation(summary = "获取设备所属模型")
     @PostMapping("/model/device")
     fun getModelInfoByDeviceId(@Valid @RequestBody authorityBody: IotAuthorityRequest): RestValue<IotAuthorityResponse> {
-        log.info("authorityBody:"+JSONUtil.toJsonStr(authorityBody))
-        val res = IotAuthorityResponse(
-            authorityBody.deviceId,
-            "AOA",
-            "aoa01",
-            "A0A01",
-            200,
-            "success",
-            ""
-        )
-        return okOf(res);
+        return modelManageService.getModelInfoByDeviceId(authorityBody)
     }
-
 }

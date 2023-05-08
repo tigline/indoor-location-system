@@ -6,7 +6,7 @@ data class IotAuthorityRequest(
     @field:Schema(required = true)
     val deviceId: String,
     @field:Schema(required = true)
-    val userName: String,
+    val username: String,
     @field:Schema(required = true)
-    val passWord: String
+    val password: String
 )

@@ -371,3 +371,14 @@ CREATE TABLE `t_model`
     PRIMARY KEY (`model_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
+-- 2023-5-9
+CREATE TABLE `t_model_device` (
+  `id` int(11) NOT NULL COMMENT 'id',
+  `device_id` varchar(64) NOT NULL COMMENT '网关设备ID',
+  `company_id` int(11) DEFAULT NULL COMMENT '所属公司ID',
+  `model_id` varchar(64) NOT NULL COMMENT '物模型ID',
+  `active` tinyint(2) DEFAULT NULL COMMENT '1有效，0无效',
+  `create_time` datetime DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lgguan.iot.position.mapper.IModelDeviceMapper">
+
+    <resultMap id="modelDeviceInfo" type="com.lgguan.iot.position.bean.AddOrUpdateModelDevice">
+        <id property="id" column="id" />
+        <result property="deviceId" column="device_id" />
+        <result property="companyId" column="company_id" />
+        <result property="modelId" column="model_id" />
+        <result property="active" column="active" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <select id="getModelDeviceByDeviceId" resultMap="modelDeviceInfo">
+        select as_t_model_device.*
+        from t_model_device as_t_model_device
+        where as_t_model_device.device_id = #{deviceId}
+        and as_t_model_device.active = 1
+        order by as_t_model_device.create_time desc
+        limit 1
+    </select>
+</mapper>
