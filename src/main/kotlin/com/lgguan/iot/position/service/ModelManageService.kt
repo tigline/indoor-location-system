@@ -15,20 +15,23 @@ class ModelManageService(
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    fun getModelInfoByDeviceId(authorityBody: IotAuthorityRequest): RestValue<IotAuthorityResponse> {
+    fun getModelInfoByClientId(authorityBody: IotAuthorityRequest): RestValue<IotAuthorityResponse> {
         log.info("authorityBody:"+ JSONUtil.toJsonStr(authorityBody))
         val apiKey: String = getApiKey()
         log.info("apiKey:$apiKey")
-        val beaconInfo = beaconInfoService.getById(authorityBody.deviceId)
-        beaconInfo ?: return failedOf(IErrorCode.DataNotExists, "Beacon [$authorityBody.deviceId] not exists")
-        val modelDevice = modelDeviceService.getModelDeviceById(beaconInfo.deviceId!!)
+        val modelDevice = modelDeviceService.getModelDeviceByClientId(authorityBody.clientId)
+        log.info("modelDevice:"+ JSONUtil.toJsonStr(modelDevice))
         val model = modelService.getById(modelDevice.modelId)
+        log.info("model:"+ JSONUtil.toJsonStr(model))
         var company = companyService.getById(modelDevice.companyId)
+        log.info("company:"+ JSONUtil.toJsonStr(company))
+//        val beaconInfo = beaconInfoService.getById(authorityBody.clientId)
+//        beaconInfo ?: return failedOf(IErrorCode.DataNotExists, "Beacon [${authorityBody.clientId}] not exists")
 
         val res = company.companyCode?.let {
-            model.modelId?.let { it1 ->
+            model.modelCode?.let { it1 ->
                 IotAuthorityResponse(
-                    authorityBody.deviceId,
+                    authorityBody.clientId,
                     it,
                     "aoa01",
                     it1,

@@ -14,9 +14,9 @@ import java.util.*
 
 interface IModelService: IService<Model> {
     fun addModel(addModel: AddOrUpdateModel): RestValue<Boolean>
-    fun updateModel(modelId: String, updateModel: AddOrUpdateModel): RestValue<Boolean>
-    fun deleteModel(modelId: String): RestValue<Boolean>
-    fun updateModelActive(modelId: String, active: Boolean): RestValue<Boolean>
+    fun updateModel(modelId: Int, updateModel: AddOrUpdateModel): RestValue<Boolean>
+    fun deleteModel(modelId: Int): RestValue<Boolean>
+    fun updateModelActive(modelId: Int, active: Boolean): RestValue<Boolean>
 }
 
 @Service
@@ -24,6 +24,7 @@ class ModelService: IModelService, ServiceImpl<IModelMapper, Model>() {
 
     override fun addModel(addModel: AddOrUpdateModel): RestValue<Boolean> {
         val model = Model().apply {
+            modelCode = addModel.modelCode
             modelName = addModel.modelName
             modelVersion = addModel.modelVersion
             companyId = addModel.companyId
@@ -37,10 +38,11 @@ class ModelService: IModelService, ServiceImpl<IModelMapper, Model>() {
         return okOf(this.save(model))
     }
 
-    override fun updateModel(modelId: String, updateModel: AddOrUpdateModel): RestValue<Boolean> {
+    override fun updateModel(modelId: Int, updateModel: AddOrUpdateModel): RestValue<Boolean> {
         val model = this.getById(modelId);
         model ?: return failedOf(IErrorCode.DataNotExists, "ModelId [$modelId] not exists")
         model.apply {
+            model.modelCode = updateModel.modelCode
             model.modelName = updateModel.modelName
             model.modelVersion = updateModel.modelVersion
             model.companyId = updateModel.companyId
@@ -53,14 +55,14 @@ class ModelService: IModelService, ServiceImpl<IModelMapper, Model>() {
         return okOf(this.updateById(model))
     }
 
-    override fun deleteModel(modelId: String): RestValue<Boolean> {
+    override fun deleteModel(modelId: Int): RestValue<Boolean> {
         val model = this.getById(modelId);
         model ?: return failedOf(IErrorCode.DataNotExists, "ModelId [$modelId] not exists")
         val res = this.removeById(modelId)
         return okOf(res)
     }
 
-    override fun updateModelActive(modelId: String, active: Boolean): RestValue<Boolean> {
+    override fun updateModelActive(modelId: Int, active: Boolean): RestValue<Boolean> {
         val model = this.getById(modelId);
         model ?: return failedOf(IErrorCode.DataNotExists, "ModelId [$modelId] not exists")
         model.apply {

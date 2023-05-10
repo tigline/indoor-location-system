@@ -355,21 +355,21 @@ alter table building_info
     add company_id int(11) null after building_id;
 
 DROP TABLE IF EXISTS `t_model`;
-CREATE TABLE `t_model`
-(
-    `model_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'model_id',
-    `model_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '物模型名',
-    `model_version` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '物模型版本',
-    `company_id` int(11) NULL DEFAULT NULL COMMENT '所属公司id',
-    `properties` json NULL COMMENT '屬性',
-    `configs` json NULL COMMENT '配置',
-    `events` json NULL COMMENT '事件',
-    `commands` json NULL COMMENT '指令',
-    `active` tinyint(1) NULL DEFAULT 1 COMMENT '1有效，0无效',
-    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-    `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
-    PRIMARY KEY (`model_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `t_model` (
+   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '模型ID',
+   `model_code` varchar(64) NOT NULL COMMENT '模型编码',
+   `model_name` varchar(50) NOT NULL COMMENT '物模型名',
+   `model_version` varchar(20) DEFAULT NULL COMMENT '物模型版本',
+   `company_id` int(11) DEFAULT NULL COMMENT '所属公司id',
+   `properties` json DEFAULT NULL COMMENT '屬性',
+   `configs` json DEFAULT NULL COMMENT '配置',
+   `events` json DEFAULT NULL COMMENT '事件',
+   `commands` json DEFAULT NULL COMMENT '指令',
+   `active` tinyint(1) DEFAULT '1' COMMENT '1有效，0无效',
+   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+   PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- 2023-5-9
 CREATE TABLE `t_model_device` (
@@ -382,3 +382,10 @@ CREATE TABLE `t_model_device` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2023-5-11
+ALTER TABLE `t_model_device` CHANGE device_id client_id varchar(64) COMMENT '设备ID';
+ALTER TABLE `t_model_device` ADD device_id VARCHAR(64) NULL COMMENT '网关ID' AFTER client_id;
+ALTER TABLE `t_model` CHANGE model_id id Int(11) NOT NULL COMMENT '模型ID';
+ALTER TABLE `t_model` ADD model_code VARCHAR(64) NOT NULL COMMENT '模型编码' AFTER id;
+ALTER TABLE `t_model_device` MODIFY model_id Int(11) COMMENT '模型ID';

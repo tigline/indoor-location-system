@@ -4,8 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema
 import java.util.*
 
 data class AddOrUpdateModel (
-    var modelId: String? = null,
+    var id: Int? = null,
     @field:Schema(required = true)
+    var modelCode: String? = null,
     var modelName: String? = null,
     var modelVersion: String? = null,
     var companyId: Int? = null,

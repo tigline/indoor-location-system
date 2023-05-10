@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 data class IotAuthorityRequest(
     @field:Schema(required = true)
-    val deviceId: String,
+    val clientId: String,
     @field:Schema(required = true)
     val username: String,
     @field:Schema(required = true)

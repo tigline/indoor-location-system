@@ -14,7 +14,7 @@ interface IModelDeviceService: IService<ModelDevice> {
     fun updateModelDevice(id: Int, updateModelDevice: AddOrUpdateModelDevice): RestValue<Boolean>
     fun deleteModelDevice(id: Int): RestValue<Boolean>
     fun updateModelDeviceActive(id: Int, active: Boolean): RestValue<Boolean>
-    fun getModelDeviceById(deviceId: String): ModelDevice
+    fun getModelDeviceByClientId(clientId: String): ModelDevice
 }
 
 @Service
@@ -36,8 +36,8 @@ class ModelDeviceService: IModelDeviceService, ServiceImpl<IModelDeviceMapper, M
         TODO("Not yet implemented")
     }
 
-    override fun getModelDeviceById(deviceId: String): ModelDevice {
-        return this.getBaseMapper().getModelDeviceByDeviceId(deviceId)
+    override fun getModelDeviceByClientId(clientId: String): ModelDevice {
+        return this.getBaseMapper().getModelDeviceByClientId(clientId)
     }
 
 

@@ -10,7 +10,8 @@ import java.util.*
 @TableName(value = "t_model")
 class Model {
     @TableId(type = IdType.AUTO)
-    var modelId: String? = null
+    var id: Int? = null
+    var modelCode: String? = null
     var modelName: String? = null
     var modelVersion: String? = null
     var companyId: Int? = null

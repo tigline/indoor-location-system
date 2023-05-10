@@ -23,32 +23,32 @@ class ModelController(val modelService: ModelService, var modelManageService: Mo
     }
 
     @Operation(summary = "编辑模型")
-    @PutMapping("/model/{modelId}")
+    @PutMapping("/model/{id}")
     fun updateModel(
-        @PathVariable modelId: String,
+        @PathVariable id: Int,
         @Valid @RequestBody updateModel: AddOrUpdateModel
     ): RestValue<Boolean> {
-        return modelService.updateModel(modelId, updateModel)
+        return modelService.updateModel(id, updateModel)
     }
 
     @Operation(summary = "删除模型")
-    @DeleteMapping("/model/{modelId}")
-    fun deleteModel(@PathVariable modelId: String): RestValue<Boolean> {
-        return modelService.deleteModel(modelId)
+    @DeleteMapping("/model/{id}")
+    fun deleteModel(@PathVariable id: Int): RestValue<Boolean> {
+        return modelService.deleteModel(id)
     }
 
     @Operation(summary = "操作模型有效/无效")
-    @PutMapping("/model/{modelId}/{active}")
+    @PutMapping("/model/{id}/{active}")
     fun updateModelActive(
-        @PathVariable modelId: String,
+        @PathVariable id: Int,
         @PathVariable active: Boolean
     ): RestValue<Boolean> {
-        return modelService.updateModelActive(modelId, active)
+        return modelService.updateModelActive(id, active)
     }
 
     @Operation(summary = "获取设备所属模型")
     @PostMapping("/model/device")
     fun getModelInfoByDeviceId(@Valid @RequestBody authorityBody: IotAuthorityRequest): RestValue<IotAuthorityResponse> {
-        return modelManageService.getModelInfoByDeviceId(authorityBody)
+        return modelManageService.getModelInfoByClientId(authorityBody)
     }
 }
