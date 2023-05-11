@@ -6,7 +6,4 @@ data class IotAuthorityResponse(
     val companyCode: String,
     val groupId: String,
     val modelCode: String,
-    val resultCode: Int,
-    val status: String,
-    val message: String
 )
