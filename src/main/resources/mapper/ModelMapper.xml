@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lgguan.iot.position.mapper.IModelMapper">
+
+    <resultMap id="modelInfoList" type="com.lgguan.iot.position.bean.IotModelResponse">
+<!--        <id property="id" column="id" />-->
+        <result property="modelCode" column="model_code" />
+        <result property="modelName" column="model_name" />
+        <result property="modelVersion" column="model_version" />
+<!--        <result property="companyId" column="company_id" />-->
+        <result property="companyCode" column="company_code" />
+        <result property="properties" column="properties" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result property="configs" column="configs" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result property="events" column="events" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result property="commands" column="commands" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+<!--        <result property="active" column="active" />-->
+<!--        <result property="createTime" column="create_time" />-->
+<!--        <result property="updateTime" column="update_time" />-->
+    </resultMap>
+
+    <select id="getAllModelInfo" resultMap="modelInfoList">
+        SELECT
+            as_model.*,as_company.company_code
+        FROM ips.t_model as_model
+        LEFT JOIN ips.t_company as_company
+        ON as_model.company_id=as_company.company_id
+        WHERE
+          as_model.company_id IS NOT NULL
+          AND as_model.active=1
+          AND as_company.active=1
+    </select>
+</mapper>

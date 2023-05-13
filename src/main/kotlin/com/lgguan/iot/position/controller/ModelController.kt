@@ -51,4 +51,10 @@ class ModelController(val modelService: ModelService, var modelManageService: Mo
     fun getModelInfoByDeviceId(@Valid @RequestBody authorityBody: IotAuthorityRequest): RestValue<IotAuthorityResponse> {
         return modelManageService.getModelInfoByClientId(authorityBody)
     }
+
+    @Operation(summary = "获取所有模型")
+    @GetMapping("/model/device")
+    fun getAllModelInfo(): RestValue<List<IotModelResponse>> {
+        return modelService.getAllModelInfo()
+    }
 }

@@ -23,7 +23,7 @@
                 "store": true
             },
             "deviceMaps": {
-                "sn": "NodeId"
+                "sn": "GatewayId"
             }
         },
         {
