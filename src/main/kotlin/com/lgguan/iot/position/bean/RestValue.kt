@@ -36,5 +36,6 @@ enum class IErrorCode(val code: Int, val message: String) {
     DataExists(4006, "Data already exists"),
     DataNotExists(4007, "Data not exists"),
     GeneAccessTokenFailed(5001, "Generate access token failed"),
+    ApiKeyErrorFailed(5004, "ApiKey failed or not exists"),
     SystemErrorFailed(5005, "System exception failed")
 }

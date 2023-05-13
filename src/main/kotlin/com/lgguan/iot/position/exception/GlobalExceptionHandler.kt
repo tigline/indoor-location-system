@@ -24,6 +24,9 @@ class GlobalExceptionHandler {
     @ExceptionHandler(TokenVerifyException::class)
     fun refreshTokenVerifyException(e: TokenVerifyException) = failedOf<Void>(IErrorCode.RefreshTokenInvalid)
 
+    @ExceptionHandler(ApiKeyVerifyException::class)
+    fun apiKeyVerifyException(e: ApiKeyVerifyException) = failedOf<Void>(IErrorCode.ApiKeyErrorFailed)
+
     @ExceptionHandler(PermissionDeniedException::class)
     fun permissionDeniedException(e: PermissionDeniedException) = failedOf<Void>(IErrorCode.PermissionDenied)
 

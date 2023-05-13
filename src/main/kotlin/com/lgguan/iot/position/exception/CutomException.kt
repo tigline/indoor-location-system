@@ -10,5 +10,7 @@ import com.lgguan.iot.position.bean.IErrorCode
 
 class TokenGenerateException: Throwable()
 class TokenVerifyException: Throwable()
+class ApiKeyVerifyException: Throwable()
+
 class PermissionDeniedException : Throwable()
 class CustomException(errorCode: IErrorCode): Throwable(message = errorCode.message)

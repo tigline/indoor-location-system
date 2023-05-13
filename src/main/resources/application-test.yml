@@ -63,3 +63,7 @@ mybatis-plus:
   global-config:
     db-config:
       update-strategy: ignored
+
+security:
+  api:
+    key: test235452

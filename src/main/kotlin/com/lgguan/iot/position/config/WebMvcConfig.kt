@@ -1,5 +1,6 @@
 package com.lgguan.iot.position.config
 
+import com.lgguan.iot.position.aop.ApiKeyInterceptor
 import com.lgguan.iot.position.aop.AuthInterceptor
 import com.lgguan.iot.position.aop.RequestLogInterceptor
 import org.springframework.context.annotation.Configuration
@@ -8,12 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 /**
  *
- *
- * @author N.Liu
  **/
 @Configuration
-class WebMvcConfig(private val authInterceptor: AuthInterceptor, private val requestLogInterceptor: RequestLogInterceptor): WebMvcConfigurer {
+class WebMvcConfig(private val authInterceptor: AuthInterceptor,
+                   private val requestLogInterceptor: RequestLogInterceptor,
+                   private val apiKeyInterceptor: ApiKeyInterceptor): WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
+        registry.addInterceptor(apiKeyInterceptor)
+            .addPathPatterns("/api/v1/model/device")
         registry.addInterceptor(requestLogInterceptor)
         registry.addInterceptor(authInterceptor)
             .excludePathPatterns("/api/v1/register", "/api/v1/login", "/api/v1/refreshToken", "/test/**",

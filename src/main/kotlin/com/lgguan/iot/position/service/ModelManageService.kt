@@ -2,7 +2,6 @@ package com.lgguan.iot.position.service
 
 import cn.hutool.json.JSONUtil
 import com.lgguan.iot.position.bean.*
-import com.lgguan.iot.position.util.getApiKey
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -17,8 +16,6 @@ class ModelManageService(
 
     fun getModelInfoByClientId(authorityBody: IotAuthorityRequest): RestValue<IotAuthorityResponse> {
         log.info("authorityBody:"+ JSONUtil.toJsonStr(authorityBody))
-        val apiKey: String = getApiKey()
-        log.info("apiKey:$apiKey")
         try {
 
             val modelDevice = modelDeviceService.getModelDeviceByClientId(authorityBody.clientId)
