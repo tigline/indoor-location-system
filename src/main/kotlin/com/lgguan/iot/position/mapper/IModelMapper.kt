@@ -6,4 +6,5 @@ import com.lgguan.iot.position.entity.Model
 
 interface IModelMapper: BaseMapper<Model> {
     fun getAllModelInfo(): List<IotModelResponse>
+    fun getModelInfoByModelId(modelId: Int): IotModelResponse
 }

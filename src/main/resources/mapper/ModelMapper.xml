@@ -29,4 +29,17 @@
           AND as_model.active=1
           AND as_company.active=1
     </select>
+
+    <select id="getModelInfoByModelId" resultMap="modelInfoList">
+        SELECT
+            as_model.*,as_company.company_code
+        FROM ips.t_model as_model
+                 LEFT JOIN ips.t_company as_company
+                           ON as_model.company_id=as_company.company_id
+        WHERE
+            as_model.company_id IS NOT NULL
+          AND as_model.active=1
+          AND as_company.active=1
+          AND as_model.id=#{modelId}
+    </select>
 </mapper>

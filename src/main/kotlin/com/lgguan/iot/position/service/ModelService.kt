@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.lgguan.iot.position.bean.*
 import com.lgguan.iot.position.entity.Model
 import com.lgguan.iot.position.mapper.IModelMapper
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -16,10 +17,11 @@ interface IModelService: IService<Model> {
     fun deleteModel(modelId: Int): RestValue<Boolean>
     fun updateModelActive(modelId: Int, active: Boolean): RestValue<Boolean>
     fun getAllModelInfo(): RestValue<List<IotModelResponse>>
+    fun getModelInfoByModelId(modelId: Int): IotModelResponse
 }
 
 @Service
-class ModelService: IModelService, ServiceImpl<IModelMapper, Model>() {
+class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IModelService, ServiceImpl<IModelMapper, Model>() {
 
     override fun addModel(addModel: AddOrUpdateModel): RestValue<Boolean> {
         val model = Model().apply {
@@ -34,7 +36,11 @@ class ModelService: IModelService, ServiceImpl<IModelMapper, Model>() {
             active = true
             createTime = Date()
         }
-        return okOf(this.save(model))
+        val res = this.save(model)
+        if(res){
+            applicationEventPublisher.publishEvent(model)
+        }
+        return okOf(res)
     }
 
     override fun updateModel(modelId: Int, updateModel: AddOrUpdateModel): RestValue<Boolean> {
@@ -51,13 +57,20 @@ class ModelService: IModelService, ServiceImpl<IModelMapper, Model>() {
             model.commands = JSONUtil.parseArray(updateModel.commands)
             model.updateTime = Date()
         }
-        return okOf(this.updateById(model))
+        val res = this.updateById(model)
+        if(res){
+            applicationEventPublisher.publishEvent(model)
+        }
+        return okOf(res)
     }
 
     override fun deleteModel(modelId: Int): RestValue<Boolean> {
         val model = this.getById(modelId);
         model ?: return failedOf(IErrorCode.DataNotExists, "ModelId [$modelId] not exists")
         val res = this.removeById(modelId)
+        if(res){
+            applicationEventPublisher.publishEvent(model)
+        }
         return okOf(res)
     }
 
@@ -68,11 +81,19 @@ class ModelService: IModelService, ServiceImpl<IModelMapper, Model>() {
             model.active = active
             updateTime = Date()
         }
-        return okOf(this.updateById(model))
+        val res = this.updateById(model)
+        if(res){
+            applicationEventPublisher.publishEvent(model)
+        }
+        return okOf(res)
     }
 
     override fun getAllModelInfo(): RestValue<List<IotModelResponse>> {
         return okOf(this.getBaseMapper().getAllModelInfo())
+    }
+
+    override fun getModelInfoByModelId(modelId: Int): IotModelResponse {
+        return this.getBaseMapper().getModelInfoByModelId(modelId)
     }
 
 }

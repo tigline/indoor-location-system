@@ -16,7 +16,7 @@ class MqttRabbitmqConsumer(val messageHandler: ExternalMqttMessageHandler) {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @RabbitHandler
-    @RabbitListener(queues = arrayOf("device.data.queue"), concurrency = "10-100")
+    @RabbitListener(queues = ["device.data.queue"], concurrency = "10-100")
     fun mqttDataQueue(channel: Channel,
                       @Header(AmqpHeaders.DELIVERY_TAG) deliveryTag: Long,
                       @Header("topic") topic: String,

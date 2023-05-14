@@ -28,8 +28,10 @@ spring:
         size: 16
     exchange:
       direct-exchange: direct-exchange
+      fanout-direct-exchange: fanout-direct-exchange
     queueName:
       device-queue: device.data.queue
+      fanout-model-queue: fanout.model.queue
     routingKey:
       device-key: device.data.key
 
