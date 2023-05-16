@@ -8,7 +8,8 @@ data class AddOrUpdateModel (
     @field:Schema(required = true)
     var modelCode: String? = null,
     var modelName: String? = null,
-    var modelVersion: String? = null,
+    var versionName: String? = null,
+    var versionCode: Int? = null,
     var companyId: Int? = null,
     val properties: String? = null,
     var configs: String? = null,

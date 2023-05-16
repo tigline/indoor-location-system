@@ -27,7 +27,8 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
         val model = Model().apply {
             modelCode = addModel.modelCode
             modelName = addModel.modelName
-            modelVersion = addModel.modelVersion
+            versionName = addModel.versionName
+            versionCode = addModel.versionCode
             companyId = addModel.companyId
             properties = JSONUtil.parseArray(addModel.properties)
             configs = JSONUtil.parseArray(addModel.configs)
@@ -49,7 +50,8 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
         model.apply {
             model.modelCode = updateModel.modelCode
             model.modelName = updateModel.modelName
-            model.modelVersion = updateModel.modelVersion
+            model.versionName = updateModel.versionName
+            model.versionCode = updateModel.versionCode
             model.companyId = updateModel.companyId
             model.properties = JSONUtil.parseArray(updateModel.properties)
             model.configs = JSONUtil.parseArray(updateModel.configs)

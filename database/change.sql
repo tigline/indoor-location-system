@@ -389,3 +389,5 @@ ALTER TABLE `t_model_device` ADD device_id VARCHAR(64) NULL COMMENT '网关ID' A
 ALTER TABLE `t_model` CHANGE model_id id Int(11) NOT NULL COMMENT '模型ID';
 ALTER TABLE `t_model` ADD model_code VARCHAR(64) NOT NULL COMMENT '模型编码' AFTER id;
 ALTER TABLE `t_model_device` MODIFY model_id Int(11) COMMENT '模型ID';
+ALTER TABLE `t_model` CHANGE model_version version_name VARCHAR(20) COMMENT '物模型版本名称';
+ALTER TABLE `t_model` ADD version_code Int(11) NULL COMMENT '物模型版本号' AFTER version_name;

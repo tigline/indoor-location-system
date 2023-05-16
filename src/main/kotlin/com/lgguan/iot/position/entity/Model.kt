@@ -14,7 +14,8 @@ class Model {
     var id: Int? = null
     var modelCode: String? = null
     var modelName: String? = null
-    var modelVersion: String? = null
+    var versionName: String? = null
+    var versionCode: Int? = null
     var companyId: Int? = null
     @TableField(value = "properties", typeHandler = JacksonTypeHandler::class)
     var properties: JSONArray? = null

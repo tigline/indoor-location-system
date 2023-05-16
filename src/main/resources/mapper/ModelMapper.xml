@@ -6,7 +6,8 @@
 <!--        <id property="id" column="id" />-->
         <result property="modelCode" column="model_code" />
         <result property="modelName" column="model_name" />
-        <result property="modelVersion" column="model_version" />
+        <result property="versionName" column="version_name" />
+        <result property="versionCode" column="version_code" />
 <!--        <result property="companyId" column="company_id" />-->
         <result property="companyCode" column="company_code" />
         <result property="properties" column="properties" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
@@ -34,8 +35,8 @@
         SELECT
             as_model.*,as_company.company_code
         FROM ips.t_model as_model
-                 LEFT JOIN ips.t_company as_company
-                           ON as_model.company_id=as_company.company_id
+        LEFT JOIN ips.t_company as_company
+        ON as_model.company_id=as_company.company_id
         WHERE
             as_model.company_id IS NOT NULL
           AND as_model.active=1
