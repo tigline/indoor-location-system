@@ -15,8 +15,12 @@ private val log = LoggerFactory.getLogger(MyWebSocketHandler::class.java)
 
 class MyWebSocketHandler : WebSocketHandler {
     override fun afterConnectionEstablished(session: WebSocketSession) {
+//        val userId = session.attributes["userId"] as String
+//        sessionMap[userId] = session
+//        log.info("WebSocket connected by: [$userId]")
+
         val userId = session.attributes["userId"] as String
-        sessionMap[userId] = session
+        sessionMap.getOrPut(userId) { mutableListOf() }.add(session)
         log.info("WebSocket connected by: [$userId]")
     }
 
@@ -32,8 +36,12 @@ class MyWebSocketHandler : WebSocketHandler {
     }
 
     override fun afterConnectionClosed(session: WebSocketSession, closeStatus: CloseStatus) {
+//        val userId = session.attributes["userId"] as String
+//        sessionMap.remove(userId)
+//        log.info("WebSocket disconnected by: [$userId]")
+
         val userId = session.attributes["userId"] as String
-        sessionMap.remove(userId)
+        sessionMap[userId]?.remove(session)
         log.info("WebSocket disconnected by: [$userId]")
     }
 
@@ -43,12 +51,22 @@ class MyWebSocketHandler : WebSocketHandler {
 }
 
 val sessionMap by lazy {
-    mutableMapOf<String, WebSocketSession>()
+    //mutableMapOf<String, WebSocketSession>()
+    mutableMapOf<String, MutableList<WebSocketSession>>()
 }
 
 fun <T> sendWsMessage(wsMessage: WsMessage<T>) {
     val message = wsMessage.toJsonStr()
-    sessionMap.values.forEach { session ->
+//    sessionMap.values.forEach { session ->
+//        if (session.isOpen) {
+//            try {
+//                session.sendMessage(TextMessage(message))
+//            } catch (e: Exception) {
+//                log.error("Send websocket message error: ${e.message}")
+//            }
+//        }
+//    }
+    sessionMap.values.flatten().forEach { session ->
         if (session.isOpen) {
             try {
                 session.sendMessage(TextMessage(message))
