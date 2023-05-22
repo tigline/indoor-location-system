@@ -391,3 +391,42 @@ ALTER TABLE `t_model` ADD model_code VARCHAR(64) NOT NULL COMMENT '模型编码'
 ALTER TABLE `t_model_device` MODIFY model_id Int(11) COMMENT '模型ID';
 ALTER TABLE `t_model` CHANGE model_version version_name VARCHAR(20) COMMENT '物模型版本名称';
 ALTER TABLE `t_model` ADD version_code Int(11) NULL COMMENT '物模型版本号' AFTER version_name;
+
+-- 2023-5-22
+CREATE TABLE `t_command_template` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `name` varchar(50) DEFAULT NULL COMMENT '模板名称',
+  `title` varchar(100) DEFAULT NULL COMMENT '模板标题，用于前端展示使用',
+  `company_id` int(11) DEFAULT NULL COMMENT '公司ID',
+  `model_id` int(11) DEFAULT NULL COMMENT '模型ID',
+  `content` varchar(1024) DEFAULT NULL COMMENT '命令内容,如果有参数，要包含占位符',
+  `param` varchar(200) DEFAULT NULL COMMENT '命令参数格式为JSONARRAY',
+  `ack_check` tinyint(1) DEFAULT '0' COMMENT '是否ack确认',
+  `enable_check` tinyint(1) DEFAULT '0' COMMENT '是否启动禁用',
+  `category` varchar(20) DEFAULT NULL COMMENT '类目',
+  `on_version` int(11) DEFAULT NULL COMMENT '可用版本',
+  `description` varchar(255) DEFAULT NULL COMMENT '描述',
+  `active` tinyint(1) DEFAULT '1' COMMENT '是否禁用(1:启用状态 0:禁用状态)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='指令模板表';
+
+CREATE TABLE `t_command_record` (
+    `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `alias` varchar(64) DEFAULT NULL COMMENT '别名',
+    `template_id` int(11) DEFAULT NULL COMMENT '模板id',
+    `content` varchar(255) DEFAULT NULL COMMENT 'content不包括占位符,不供用户查看',
+    `param` varchar(255) DEFAULT NULL COMMENT '命令参数格式为key:value:type多个用分号分割',
+    `immediately` tinyint(1) DEFAULT '1' COMMENT '是否立即执行1立即2延时',
+    `plan_execute_time` datetime DEFAULT NULL COMMENT '计划执行时间',
+    `timeout` int(11) DEFAULT NULL COMMENT '超时时间(单位秒)',
+    `description` varchar(255) DEFAULT NULL COMMENT '描述',
+    `status` tinyint(1) DEFAULT '0' COMMENT '命令状态(0:ready 1:processing 2:completed)',
+    `execute_end_time` datetime DEFAULT NULL COMMENT '执行结束时间',
+    `creator` varchar(50) DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `updater` varchar(50) DEFAULT NULL COMMENT '更新者',
+    `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='指令执行记录表';

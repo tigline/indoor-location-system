@@ -48,7 +48,7 @@ class CompanyService : ICompanyService, ServiceImpl<ICompanyMapper, Company>() {
     }
 
     override fun updateCompany(companyId: Int, updateCompany: AddOrUpdateCompany): RestValue<Boolean> {
-        val company = this.getById(companyId);
+        val company = this.getById(companyId)
         company ?: return failedOf(IErrorCode.DataNotExists, "CompanyId [$companyId] not exists")
         company.apply {
             companyCode = updateCompany.companyCode
@@ -62,14 +62,14 @@ class CompanyService : ICompanyService, ServiceImpl<ICompanyMapper, Company>() {
     }
 
     override fun deleteCompany(companyId: Int): RestValue<Boolean> {
-        val company = this.getById(companyId);
+        val company = this.getById(companyId)
         company ?: return failedOf(IErrorCode.DataNotExists, "CompanyId [$companyId] not exists")
         val res = this.removeById(companyId)
         return okOf(res)
     }
 
     override fun updateCompanyActive(companyId: Int, active: Boolean): RestValue<Boolean> {
-        val company = this.getById(companyId);
+        val company = this.getById(companyId)
         company ?: return failedOf(IErrorCode.DataNotExists, "CompanyId [$companyId] not exists")
         company.apply {
             company.active = active
