@@ -29,9 +29,11 @@ spring:
     exchange:
       direct-exchange: direct-exchange
       fanout-direct-exchange: fanout-direct-exchange
+      fanout-direct-exchange-command: fanout-direct-exchange-command
     queueName:
       device-queue: device.data.queue
       fanout-model-queue: fanout.model.queue
+      fanout-command-queue: fanout.command.queue
     routingKey:
       device-key: device.data.key
 

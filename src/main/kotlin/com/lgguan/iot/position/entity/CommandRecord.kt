@@ -9,8 +9,9 @@ import java.util.*
 class CommandRecord {
     @TableId(type = IdType.AUTO)
     var id: Int? = null
-    var alias: String? = null
+    var clientId: String? = null
     var templateId: Int? = null
+    var alias: String? = null
     var content: String? = null
     var param: String? = null
     var immediately: Int? = null

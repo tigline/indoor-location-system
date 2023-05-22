@@ -6,8 +6,9 @@ import java.util.*
 data class AddOrUpdateCommandRecord(
     var id: Int? = null,
     @field:Schema(required = true)
-    var alias: String? = null,
+    var clientId: String? = null,
     var templateId: Int? = null,
+    var alias: String? = null,
     var content: String? = null,
     var param: String? = null,
     var immediately: Int? = null,

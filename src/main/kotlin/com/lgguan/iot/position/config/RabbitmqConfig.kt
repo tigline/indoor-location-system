@@ -22,12 +22,23 @@ class RabbitmqConfig {
     @Value("\${spring.rabbitmq.exchange.fanout-direct-exchange}")
     val fanoutExchangeName: String = ""
 
+    @Value("\${spring.rabbitmq.exchange.fanout-direct-exchange-command}")
+    val commandFanoutExchangeName: String = ""
+
     @Value("\${spring.rabbitmq.queueName.fanout-model-queue}")
     val fanoutQueueName: String = ""
+
+    @Value("\${spring.rabbitmq.queueName.fanout-command-queue}")
+    val commandFanoutQueueName: String = ""
 
     @Bean
     fun fanoutExchange(): FanoutExchange {
         return FanoutExchange(fanoutExchangeName)
+    }
+
+    @Bean
+    fun commandFanoutExchange(): FanoutExchange {
+        return FanoutExchange(commandFanoutExchangeName)
     }
 
     @Bean
@@ -36,8 +47,18 @@ class RabbitmqConfig {
     }
 
     @Bean
+    fun commandFanoutQueue(): Queue {
+        return Queue(commandFanoutQueueName, true)
+    }
+
+    @Bean
     fun bindingFanoutQueue(): Binding {
         return BindingBuilder.bind(fanoutQueue()).to(fanoutExchange())
+    }
+
+    @Bean
+    fun bindingCommandFanoutQueue(): Binding {
+        return BindingBuilder.bind(commandFanoutQueue()).to(commandFanoutExchange())
     }
 
     @Bean

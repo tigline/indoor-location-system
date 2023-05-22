@@ -414,8 +414,9 @@ CREATE TABLE `t_command_template` (
 
 CREATE TABLE `t_command_record` (
     `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `alias` varchar(64) DEFAULT NULL COMMENT '别名',
+    `client_id` varchar(64) DEFAULT NULL COMMENT '设备ID',
     `template_id` int(11) DEFAULT NULL COMMENT '模板id',
+    `alias` varchar(64) DEFAULT NULL COMMENT '别名',
     `content` varchar(255) DEFAULT NULL COMMENT 'content不包括占位符,不供用户查看',
     `param` varchar(255) DEFAULT NULL COMMENT '命令参数格式为key:value:type多个用分号分割',
     `immediately` tinyint(1) DEFAULT '1' COMMENT '是否立即执行1立即2延时',
