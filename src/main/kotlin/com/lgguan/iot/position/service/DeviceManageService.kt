@@ -89,20 +89,24 @@ class DeviceManageService(
         if (update) {
             CoroutineScope(Dispatchers.IO).launch {
                 acServerApi.updateGatewayLocation(
-                    gatewayInfo.gateway!!,
-                    gatewayInfo.setX,
-                    gatewayInfo.setY,
-                    gatewayInfo.setZ,
-                    gatewayInfo.angle,
-                    gatewayInfo.mapId,
-                    gatewayInfo.groupId ?: "0"
-
+                    gateway = gatewayInfo.gateway ?: "",
+                    x = gatewayInfo.setX,
+                    y = gatewayInfo.setY,
+                    z = gatewayInfo.setZ,
+                    angle = gatewayInfo.angle,
+                    group = gatewayInfo.groupId ?: "0",
                 )
             }
         }
         return okOf(update)
     }
-
+//    gatewayInfo.gateway ?: "",
+//    gatewayInfo.setX,
+//    gatewayInfo.setY,
+//    gatewayInfo.setZ,
+//    gatewayInfo.angle,
+//    gatewayInfo.mapId,
+//    gatewayInfo.groupId ?: "0"
     fun deleteGatewayInfo(gateway: String): RestValue<Boolean> {
         val gatewayInfo = gatewayInfoService.getById(gateway)
         gatewayInfo ?: return failedOf(IErrorCode.DataNotExists, "Gateway [$gateway] not exists")
