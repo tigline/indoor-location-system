@@ -15,5 +15,6 @@ data class UpdateGateway(
     val setX: Float? = null,
     val setY: Float? = null,
     val setZ: Float? = null,
-    val angle: Float? = null
+    val angle: Float? = null,
+    var group: String? = null
 )

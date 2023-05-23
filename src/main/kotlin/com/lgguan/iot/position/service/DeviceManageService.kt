@@ -82,6 +82,7 @@ class DeviceManageService(
             setY = updateGateway.setY
             setZ = updateGateway.setZ
             angle = updateGateway.angle
+            groupId = updateGateway.group
             updateTime = DateUtil.currentSeconds()
         }
         val update = gatewayInfoService.updateById(gatewayInfo)
@@ -93,7 +94,9 @@ class DeviceManageService(
                     gatewayInfo.setY,
                     gatewayInfo.setZ,
                     gatewayInfo.angle,
-                    gatewayInfo.mapId
+                    gatewayInfo.mapId,
+                    gatewayInfo.groupId ?: "0"
+
                 )
             }
         }
