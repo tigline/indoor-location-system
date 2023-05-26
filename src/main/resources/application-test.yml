@@ -71,3 +71,9 @@ mybatis-plus:
 security:
   api:
     key: test235452
+
+indoor:
+  file:
+    path: /app/data/fserver/files
+    prefix: /download
+    domain: 127.0.0.1:8080
