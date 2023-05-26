@@ -38,3 +38,10 @@ mybatis-plus:
   global-config:
     db-config:
       update-strategy: ignored
+
+indoor:
+  file:
+#    path: /app/data/fserver/files
+    path: C:\indoor
+    prefix: /download
+    domain: 127.0.0.1:8080
