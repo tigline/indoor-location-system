@@ -23,7 +23,7 @@ object MimeTypeUtils {
         "doc", "docx", "xls", "xlsx", "ppt", "pptx", "html", "htm", "txt",  // 压缩文件
         "rar", "zip", "gz", "bz2",  // 视频格式
         "mp4", "avi", "rmvb",  // pdf
-        "pdf"
+        "pdf", "jar"
     )
 
     fun getExtension(prefix: String?): String {

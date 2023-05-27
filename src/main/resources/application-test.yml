@@ -2,9 +2,13 @@ server:
   port: 9050
 
 spring:
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 200MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.107.124.166:3306/ips?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
+    url: jdbc:mysql://47.107.124.166:3306/ips?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
     username: lgguan
     password: Lgguan@2023
 
@@ -76,4 +80,4 @@ indoor:
   file:
     path: /app/data/fserver/files
     prefix: /download
-    domain: 127.0.0.1:8080
+    domain: http://lease.hdcdt.cn
