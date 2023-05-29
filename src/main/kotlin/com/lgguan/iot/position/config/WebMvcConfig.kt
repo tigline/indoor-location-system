@@ -24,6 +24,8 @@ class WebMvcConfig(private val authInterceptor: AuthInterceptor, private val req
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
             .allowedOrigins("http://localhost:8000")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS");
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true);
     }
 }
