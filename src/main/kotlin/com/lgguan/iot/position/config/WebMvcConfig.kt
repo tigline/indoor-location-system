@@ -21,11 +21,11 @@ class WebMvcConfig(private val authInterceptor: AuthInterceptor, private val req
                 "/v3/api-docs/**", "/doc.html", "/swagger-ui/**", "/webjars/**", "/favicon.ico")
     }
 
-    override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")
-            .allowedOrigins("http://localhost:8000")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
-            .allowedHeaders("*")
-            .allowCredentials(true);
-    }
+//    override fun addCorsMappings(registry: CorsRegistry) {
+//        registry.addMapping("/**")
+//            .allowedOrigins("http://localhost:8000")
+//            .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
+//            .allowedHeaders("*")
+//            .allowCredentials(true);
+//    }
 }
