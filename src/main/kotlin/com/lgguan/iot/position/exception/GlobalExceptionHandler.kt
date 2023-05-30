@@ -4,6 +4,8 @@ import com.lgguan.iot.position.bean.IErrorCode
 import com.lgguan.iot.position.bean.RestValue
 import com.lgguan.iot.position.bean.failedOf
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -42,6 +44,11 @@ class GlobalExceptionHandler {
     fun exception(e: Exception): RestValue<Void> {
         log.error("Global exception handler catch exception", e)
         return failedOf(IErrorCode.Failed)
+    }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(ex: IllegalArgumentException): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.message)
     }
 
 }
