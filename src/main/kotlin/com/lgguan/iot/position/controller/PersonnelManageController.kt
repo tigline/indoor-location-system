@@ -1,6 +1,8 @@
 package com.lgguan.iot.position.controller
 
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.lgguan.iot.position.bean.*
+import com.lgguan.iot.position.entity.PersonnelInfo
 import com.lgguan.iot.position.entity.PersonnelTypeInfo
 import com.lgguan.iot.position.service.PersonnelManageService
 import io.swagger.v3.oas.annotations.Operation
@@ -56,6 +58,19 @@ class PersonnelManageController(val personnelManageService: PersonnelManageServi
     fun addPersonnelType(@Valid @RequestBody addPersonnelType: AddOrUpdatePersonnelType): RestValue<Boolean> {
         val res = personnelManageService.addPersonnelTypeInfo(addPersonnelType)
         return okOf(res)
+    }
+
+    @Operation(summary = "删除人员分类")
+    @DeleteMapping("/personnelTypes/{typeId}")
+    fun deletePersonnelType(@PathVariable typeId: Long): RestValue<Boolean> {
+        var count = personnelManageService.personnelInfoService.count(
+            KtQueryWrapper(PersonnelInfo::class.java)
+                .eq(PersonnelInfo::typeId, typeId)
+        )
+        if (count > 0) {
+            return failedOf(IErrorCode.TypeIdIsReferenced)
+        }
+        return personnelManageService.deletePersonnelTypeInfo(typeId)
     }
 
     @Operation(summary = "编辑人员分类")

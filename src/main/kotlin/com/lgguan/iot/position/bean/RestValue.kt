@@ -35,5 +35,6 @@ enum class IErrorCode(val code: Int, val message: String) {
     ParameterVerificationFailed(4005, "Parameter verification failed"),
     DataExists(4006, "Data already exists"),
     DataNotExists(4007, "Data not exists"),
+    TypeIdIsReferenced(4008, "Type id is referenced"),
     GeneAccessTokenFailed(5001, "Generate access token failed")
 }

@@ -1,5 +1,6 @@
 package com.lgguan.iot.position.controller
 
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.lgguan.iot.position.bean.*
 import com.lgguan.iot.position.entity.ThingInfo
 import com.lgguan.iot.position.entity.ThingTypeInfo
@@ -30,6 +31,15 @@ class ThingManageController(val thingManageService: ThingManageService) {
     @Operation(summary = "新增物品分类")
     @PostMapping("/thingTypes")
     fun addThingType(@Valid @RequestBody addThingType: AddOrUpdateThingType): RestValue<Boolean> {
+
+        val count = thingManageService.thingTypeInfoService.count(
+            KtQueryWrapper(ThingTypeInfo::class.java)
+                .eq(ThingTypeInfo::typeName, addThingType.typeName)
+        )
+        if (count > 0) {
+            return failedOf(IErrorCode.DataExists)
+        }
+
         val res = thingManageService.addThingTypeInfo(addThingType)
         return okOf(res)
     }
@@ -46,6 +56,16 @@ class ThingManageController(val thingManageService: ThingManageService) {
     @Operation(summary = "删除物品分类")
     @DeleteMapping("/thingTypes/{typeId}")
     fun deleteThingType(@PathVariable typeId: Long): RestValue<Boolean> {
+
+        var count = thingManageService.thingInfoService.count(
+            KtQueryWrapper(ThingInfo::class.java)
+                .eq(ThingTypeInfo::typeId, typeId)
+        )
+
+        if (count > 0) {
+            return failedOf(IErrorCode.TypeIdIsReferenced)
+        }
+
         return thingManageService.deleteThingTypeInfo(typeId)
     }
 
