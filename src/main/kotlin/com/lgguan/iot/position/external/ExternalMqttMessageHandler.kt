@@ -71,6 +71,7 @@ class ExternalMqttMessageHandler(val externalFenceHandler: ExternalFenceHandler)
                         status = onlineStatus.status
                         ip = onlineStatus.ip
                     }?.updateById()
+                    sendWsMessage(WsMessage(MessageType.OnlineStatus, GatewayInfo().selectById(onlineStatus.gateway)))
                 }
             }
 
@@ -85,6 +86,7 @@ class ExternalMqttMessageHandler(val externalFenceHandler: ExternalFenceHandler)
                     hisY = aoaStationHis.hisY
                     hisZ = aoaStationHis.hisZ
                 }?.updateById()
+                sendWsMessage(WsMessage(MessageType.OnlineStatus, gatewayInfo))
             }
 
             else -> {

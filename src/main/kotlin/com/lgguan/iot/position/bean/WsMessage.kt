@@ -7,5 +7,7 @@ data class WsMessage<T>(
 
 enum class MessageType {
     AOAData,
-    Alarm
+    Alarm,
+    Fence,
+    OnlineStatus,
 }
