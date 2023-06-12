@@ -1,6 +1,6 @@
 {
     "profile": {
-        "model": "AOA01",
+        "model": "AOA02",
         "version": "1.0"
     },
     "configs": [
@@ -50,69 +50,6 @@
                     }
                 },
                 {
-                    "identifier": "systemId",
-                    "title": "System ID",
-                    "description": "Device System ID",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "type",
-                    "title": "Type",
-                    "description": "Device Type",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "mac",
-                    "title": "mac",
-                    "description": "Device mac",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
                     "identifier": "motion",
                     "title": "motion",
                     "description": "Device motion",
@@ -134,72 +71,51 @@
                     }
                 },
                 {
+                    "identifier": "x",
+                    "title": "x",
+                    "description": "Device x",
+                    "category": "schema",
+                    "specification": {
+                        "type": "float",
+                        "definition": {
+                            "min": null,
+                            "max": null,
+                            "unit": null,
+                            "accuracy": null
+                        }
+                    },
+                    "settings": {
+                        "enable": true,
+                        "display": true,
+                        "overwrite": true,
+                        "store": true
+                    }
+                },
+                {
+                    "identifier": "y",
+                    "title": "y",
+                    "description": "Device y",
+                    "category": "schema",
+                    "specification": {
+                        "type": "float",
+                        "definition": {
+                            "min": null,
+                            "max": null,
+                            "unit": null,
+                            "accuracy": null
+                        }
+                    },
+                    "settings": {
+                        "enable": true,
+                        "display": true,
+                        "overwrite": true,
+                        "store": true
+                    }
+                },
+                {
                     "identifier": "optScale",
                     "title": "opt_scale",
                     "description": "Device opt_scale",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "positionType",
-                    "title": "position_type",
-                    "description": "Device position_type",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "posX",
-                    "title": "posX",
-                    "description": "Device posX",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "posY",
-                    "title": "posY",
-                    "description": "Device posY",
                     "category": "schema",
                     "specification": {
                         "type": "float",
@@ -239,7 +155,13 @@
                     }
                 }
             ],
-            "mapKeys": {}
+            "mapKeys": {
+                "nodeId": "deviceMac",
+                "x": "coordinate_x",
+                "y": "coordinate_y",
+                "optScale": "coordinate_z",
+                "online": "online_status"
+            }
         },
         {
             "topic": "/ips/pub/station_online_status",
@@ -266,9 +188,9 @@
                     }
                 },
                 {
-                    "identifier": "systemId",
-                    "title": "System ID",
-                    "description": "Device System ID",
+                    "identifier": "nodeId",
+                    "title": "Node ID",
+                    "description": "Device Node ID",
                     "category": "schema",
                     "specification": {
                         "type": "string",
@@ -287,51 +209,9 @@
                     }
                 },
                 {
-                    "identifier": "type",
-                    "title": "Type",
-                    "description": "Device Type",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "status",
-                    "title": "status",
-                    "description": "Device status",
-                    "category": "schema",
-                    "specification": {
-                        "type": "int",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "ip",
-                    "title": "ip",
-                    "description": "Device ip",
+                    "identifier": "online",
+                    "title": "Online",
+                    "description": "Device online",
                     "category": "schema",
                     "specification": {
                         "type": "int",
@@ -350,7 +230,10 @@
                     }
                 }
             ],
-            "mapKeys": {}
+            "mapKeys": {
+                "nodeId": "deviceMac",
+                "online": "online_status.status"
+            }
         },
         {
             "topic": "/ips/pub/AOA_Station_His",
@@ -377,30 +260,9 @@
                     }
                 },
                 {
-                    "identifier": "systemId",
-                    "title": "System ID",
-                    "description": "Device System ID",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "type",
-                    "title": "Type",
-                    "description": "Device Type",
+                    "identifier": "nodeId",
+                    "title": "Node ID",
+                    "description": "Device Node ID",
                     "category": "schema",
                     "specification": {
                         "type": "string",
@@ -480,9 +342,102 @@
                         "overwrite": true,
                         "store": true
                     }
+                },
+                {
+                    "identifier": "positionX",
+                    "title": "positionX",
+                    "description": "Device positionX",
+                    "category": "schema",
+                    "specification": {
+                        "type": "float",
+                        "definition": {
+                            "min": null,
+                            "max": null,
+                            "unit": null,
+                            "accuracy": null
+                        }
+                    },
+                    "settings": {
+                        "enable": true,
+                        "display": true,
+                        "overwrite": true,
+                        "store": true
+                    }
+                },
+                {
+                    "identifier": "positionY",
+                    "title": "positionY",
+                    "description": "Device positionY",
+                    "category": "schema",
+                    "specification": {
+                        "type": "float",
+                        "definition": {
+                            "min": null,
+                            "max": null,
+                            "unit": null,
+                            "accuracy": null
+                        }
+                    },
+                    "settings": {
+                        "enable": true,
+                        "display": true,
+                        "overwrite": true,
+                        "store": true
+                    }
+                },
+                {
+                    "identifier": "positionZ",
+                    "title": "positionZ",
+                    "description": "Device positionZ",
+                    "category": "schema",
+                    "specification": {
+                        "type": "float",
+                        "definition": {
+                            "min": null,
+                            "max": null,
+                            "unit": null,
+                            "accuracy": null
+                        }
+                    },
+                    "settings": {
+                        "enable": true,
+                        "display": true,
+                        "overwrite": true,
+                        "store": true
+                    }
+                },
+                {
+                    "identifier": "online",
+                    "title": "Online",
+                    "description": "Device online",
+                    "category": "schema",
+                    "specification": {
+                        "type": "int",
+                        "definition": {
+                            "min": null,
+                            "max": null,
+                            "unit": null,
+                            "accuracy": null
+                        }
+                    },
+                    "settings": {
+                        "enable": true,
+                        "display": true,
+                        "overwrite": true,
+                        "store": true
+                    }
                 }
             ],
-            "mapKeys": {}
+            "mapKeys": {
+                "nodeId": "deviceMac",
+                "hisX": "orientation_x",
+                "hisY": "orientation_y",
+                "hisZ": "orientation_z",
+                "positionX": "position_x",
+                "positionY": "position_y",
+                "positionZ": "position_z",
+                "online": "online_status"
+            }
         }
     ],
     "commands": [
