@@ -1,511 +1,63 @@
 {
-    "profile": {
-        "model": "AOA02",
-        "version": "1.0"
-    },
-    "configs": [
+    "vendor": "jinju",
+    "jsonType": 1,
+    "topics": [
         {
+            "topicName": "beaconInfoTopic",
             "topic": "/ips/pub/AOA_data",
-            "properties": [
-                {
-                    "identifier": "gateway",
-                    "title": "Gateway ID",
-                    "description": "Device Gateway ID",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "nodeId",
-                    "title": "Node ID",
-                    "description": "Device Node ID",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "motion",
-                    "title": "motion",
-                    "description": "Device motion",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "x",
-                    "title": "x",
-                    "description": "Device x",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "y",
-                    "title": "y",
-                    "description": "Device y",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "optScale",
-                    "title": "opt_scale",
-                    "description": "Device opt_scale",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "online",
-                    "title": "Online",
-                    "description": "Device online",
-                    "category": "schema",
-                    "specification": {
-                        "type": "int",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                }
-            ],
             "mapKeys": {
-                "nodeId": "deviceMac",
-                "x": "coordinate_x",
-                "y": "coordinate_y",
-                "optScale": "coordinate_z",
-                "online": "online_status"
+                "gateway": "Gateway",
+                "deviceMac": "NodeId",
+                "motion": "motion",
+                "coordinate_x": "x",
+                "coordinate_x": "y",
+                "coordinate_x": "z"
+            },
+            "properties": {
+                "deviceMac": 1,
+                "gateway": 1,
+                "motion": 1,
+                "coordinate_x": 2,
+                "coordinate_y": 2,
+                "coordinate_z": 2,
+                "online_status": 1
             }
-        },
-        {
-            "topic": "/ips/pub/station_online_status",
-            "properties": [
-                {
-                    "identifier": "gateway",
-                    "title": "Gateway ID",
-                    "description": "Device Gateway ID",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "nodeId",
-                    "title": "Node ID",
-                    "description": "Device Node ID",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "online",
-                    "title": "Online",
-                    "description": "Device online",
-                    "category": "schema",
-                    "specification": {
-                        "type": "int",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                }
-            ],
-            "mapKeys": {
-                "nodeId": "deviceMac",
-                "online": "online_status.status"
-            }
-        },
-        {
+        },{
+            "topicName": "beaconStatusTopic",
+            "topic": "",
+            "mapKeys": {},
+            "properties": {}
+        },{
+            "topicName": "gatewayInfoTopic",
             "topic": "/ips/pub/AOA_Station_His",
-            "properties": [
-                {
-                    "identifier": "gateway",
-                    "title": "Gateway ID",
-                    "description": "Device Gateway ID",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "nodeId",
-                    "title": "Node ID",
-                    "description": "Device Node ID",
-                    "category": "schema",
-                    "specification": {
-                        "type": "string",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "hisX",
-                    "title": "hisX",
-                    "description": "Device hisX",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "hisY",
-                    "title": "hisY",
-                    "description": "Device hisY",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "hisZ",
-                    "title": "hisZ",
-                    "description": "Device hisZ",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "positionX",
-                    "title": "positionX",
-                    "description": "Device positionX",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "positionY",
-                    "title": "positionY",
-                    "description": "Device positionY",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "positionZ",
-                    "title": "positionZ",
-                    "description": "Device positionZ",
-                    "category": "schema",
-                    "specification": {
-                        "type": "float",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                },
-                {
-                    "identifier": "online",
-                    "title": "Online",
-                    "description": "Device online",
-                    "category": "schema",
-                    "specification": {
-                        "type": "int",
-                        "definition": {
-                            "min": null,
-                            "max": null,
-                            "unit": null,
-                            "accuracy": null
-                        }
-                    },
-                    "settings": {
-                        "enable": true,
-                        "display": true,
-                        "overwrite": true,
-                        "store": true
-                    }
-                }
-            ],
             "mapKeys": {
-                "nodeId": "deviceMac",
-                "hisX": "orientation_x",
-                "hisY": "orientation_y",
-                "hisZ": "orientation_z",
-                "positionX": "position_x",
-                "positionY": "position_y",
-                "positionZ": "position_z",
-                "online": "online_status"
+                "gateway": "Gateway",
+                "deviceMac": "Gateway",
+                "orientation_x": "his_x",
+                "orientation_y": "his_y",
+                "orientation_z": "his_z"
+            },
+            "properties": {
+                "deviceMac": "1",
+                "gateway": "1",
+                "position_x": "2",
+                "position_y": "2",
+                "position_z": "2",
+                "orientation_x": "2",
+                "orientation_y": "2",
+                "orientation_z": "2",
+                "online_status": "1",
+                "mapId": "1"
             }
-        }
-    ],
-    "commands": [
-        {
-            "identifier": "shutdown",
-            "title": "Shutdown",
-            "description": "Shutdown the device remotely",
-            "category": "command",
-            "command": "shutdown",
-            "settings": {
-                "enable": true,
-                "ack": false
-            }
-        },
-        {
-            "identifier": "restart",
-            "title": "Restart",
-            "description": "Device restart event, triggered when the device restarts",
-            "category": "command",
-            "command": "restart",
-            "settings": {
-                "enable": true,
-                "ack": false
-            }
-        },
-        {
-            "identifier": "reset",
-            "title": "Reset",
-            "description": "Reset the device remotely",
-            "category": "command",
-            "command": "reset",
-            "settings": {
-                "enable": true,
-                "ack": false
-            }
-        },
-        {
-            "identifier": "snapshot",
-            "title": "Get Report Snapshot",
-            "description": "Get device report remotely",
-            "category": "command",
-            "command": "snapshot",
-            "settings": {
-                "enable": true,
-                "ack": false
-            }
-        },
-        {
-            "identifier": "report",
-            "title": "Get Report",
-            "description": "Get device report data remotely",
-            "category": "command",
-            "command": "report",
-            "settings": {
-                "enable": true,
-                "ack": false
-            }
-        },
-        {
-            "identifier": "updatePos",
-            "title": "Get Location",
-            "description": "Get device location remotely",
-            "category": "command",
-            "command": "get location",
-            "settings": {
-                "enable": true,
-                "ack": false
-            }
+        },{
+            "topicName": "gatewayStatusTopic",
+            "topic": "/ips/pub/station_online_status",
+            "mapKeys": {
+                "gateway": "Gateway",
+                "deviceMac": "Gateway",
+                "online_status": "online_status.status"
+            },
+            "properties": {}
         }
     ]
 }

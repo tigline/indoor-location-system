@@ -1,12 +1,14 @@
 package com.lgguan.iot.position.controller
 
 import com.lgguan.iot.position.bean.*
+import com.lgguan.iot.position.entity.Model
 import com.lgguan.iot.position.service.ModelManageService
 import com.lgguan.iot.position.service.ModelService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
+import org.springdoc.core.annotations.ParameterObject
 import org.springframework.web.bind.annotation.*
 
 @Tag(name = "模型管理")
@@ -15,6 +17,14 @@ import org.springframework.web.bind.annotation.*
 class ModelController(val modelService: ModelService, var modelManageService: ModelManageService) {
 
     private val log = LoggerFactory.getLogger(javaClass)
+
+    @Operation(summary = "分页获取物模型")
+    @GetMapping("/models")
+    fun pageModel(vendor: String?, companyId: Int?, @ParameterObject pageLimit: PageLimit):
+            RestValue<PageResult<Model>> {
+        val res = modelService.pageModels(vendor, companyId, pageLimit)
+        return okOf(res)
+    }
 
     @Operation(summary = "添加模型")
     @PostMapping("/model")

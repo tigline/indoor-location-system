@@ -13,18 +13,12 @@ class Model {
     @TableId(type = IdType.AUTO)
     var id: Int? = null
     var modelCode: String? = null
-    var modelName: String? = null
+    var jsonType: Int? = null
     var versionName: String? = null
     var versionCode: Int? = null
     var companyId: Int? = null
-    @TableField(value = "properties", typeHandler = JacksonTypeHandler::class)
-    var properties: JSONArray? = null
-    @TableField(value = "configs", typeHandler = JacksonTypeHandler::class)
-    var configs: JSONArray? = null
-    @TableField(value = "events", typeHandler = JacksonTypeHandler::class)
-    var events: JSONArray? = null
-    @TableField(value = "commands", typeHandler = JacksonTypeHandler::class)
-    var commands: JSONArray? = null
+    @TableField(value = "topics", typeHandler = JacksonTypeHandler::class)
+    var topics: JSONArray? = null
     var active: Boolean? = false
     var createTime: Date? = null
     var updateTime: Date? = null

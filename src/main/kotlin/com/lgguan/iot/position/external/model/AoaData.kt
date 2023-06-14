@@ -29,7 +29,9 @@ data class AoaData(
     @JsonProperty("x")
     val posX: Float? = null,
     @JsonProperty("y")
-    val posY: Float? = null
+    val posY: Float? = null,
+    @JsonProperty("online")
+    val online: String? = null
 )
 
 fun AoaData.toInfo(): AoaDataInfo {
