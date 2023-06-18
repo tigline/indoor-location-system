@@ -5,16 +5,12 @@
     <resultMap id="modelInfoList" type="com.lgguan.iot.position.bean.IotModelResponse">
 <!--        <id property="id" column="id" />-->
         <result property="modelCode" column="model_code" />
-        <result property="modelName" column="model_name" />
+        <result property="jsonType" column="json_type"/>
         <result property="versionName" column="version_name" />
         <result property="versionCode" column="version_code" />
-<!--        <result property="companyId" column="company_id" />-->
         <result property="companyCode" column="company_code" />
-        <result property="properties" column="properties" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
-        <result property="configs" column="configs" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
-        <result property="events" column="events" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
-        <result property="commands" column="commands" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
-<!--        <result property="active" column="active" />-->
+        <result property="topics" column="topics" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result property="active" column="active" />
 <!--        <result property="createTime" column="create_time" />-->
 <!--        <result property="updateTime" column="update_time" />-->
     </resultMap>
@@ -24,7 +20,7 @@
             as_model.*,as_company.company_code
         FROM ips.t_model as_model
         LEFT JOIN ips.t_company as_company
-        ON as_model.company_id=as_company.company_id
+        ON as_model.company_id=as_company.id
         WHERE
           as_model.company_id IS NOT NULL
           AND as_model.active=1
@@ -36,11 +32,9 @@
             as_model.*,as_company.company_code
         FROM ips.t_model as_model
         LEFT JOIN ips.t_company as_company
-        ON as_model.company_id=as_company.company_id
+        ON as_model.company_id=as_company.id
         WHERE
             as_model.company_id IS NOT NULL
-          AND as_model.active=1
-          AND as_company.active=1
           AND as_model.id=#{modelId}
     </select>
 </mapper>

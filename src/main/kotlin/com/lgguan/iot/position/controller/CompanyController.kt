@@ -1,13 +1,12 @@
 package com.lgguan.iot.position.controller
 
-import com.lgguan.iot.position.bean.AddOrUpdateCompany
-import com.lgguan.iot.position.bean.RestValue
-import com.lgguan.iot.position.bean.okOf
+import com.lgguan.iot.position.bean.*
 import com.lgguan.iot.position.entity.Company
 import com.lgguan.iot.position.service.CompanyService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
+import org.springdoc.core.annotations.ParameterObject
 import org.springframework.web.bind.annotation.*
 
 
@@ -16,10 +15,11 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1")
 class CompanyController(val companyService: CompanyService){
 
-    @Operation(summary = "获取公司列表")
+    @Operation(summary = "分页获取公司列表")
     @GetMapping("/companys")
-    fun listCompany(companyName: String? = null, companyCode: String? = null): RestValue<List<Company>> {
-        val res = companyService.listCompany(companyName, companyCode)
+    fun listCompany(companyName: String? = null, companyCode: String? = null,
+                    @ParameterObject pageLimit: PageLimit): RestValue<PageResult<Company>> {
+        val res = companyService.listCompany(companyName, companyCode, pageLimit)
         return okOf(res)
     }
 

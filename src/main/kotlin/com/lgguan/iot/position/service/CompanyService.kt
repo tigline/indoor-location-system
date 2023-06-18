@@ -5,12 +5,13 @@ import com.baomidou.mybatisplus.extension.service.IService
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.lgguan.iot.position.bean.*
 import com.lgguan.iot.position.entity.Company
+import com.lgguan.iot.position.ext.convert
 import com.lgguan.iot.position.mapper.ICompanyMapper
 import org.springframework.stereotype.Service
 import java.util.*
 
 interface ICompanyService: IService<Company> {
-    fun listCompany(companyName: String?, companyCode: String?): List<Company>
+    fun listCompany(companyName: String?, companyCode: String?, pageLimit: PageLimit): PageResult<Company>
     fun addCompany(addCompany: AddOrUpdateCompany): RestValue<Boolean>
     fun updateCompany(companyId: Int, updateCompany: AddOrUpdateCompany): RestValue<Boolean>
     fun deleteCompany(companyId: Int): RestValue<Boolean>
@@ -20,12 +21,13 @@ interface ICompanyService: IService<Company> {
 @Service
 class CompanyService : ICompanyService, ServiceImpl<ICompanyMapper, Company>() {
 
-    override fun listCompany(companyName: String?, companyCode: String?): List<Company> {
-        return this.list(
-            KtQueryWrapper(Company::class.java)
-                .like(!companyName.isNullOrEmpty(), Company::companyName, companyName)
+    override fun listCompany(companyName: String?, companyCode: String?, pageLimit: PageLimit): PageResult<Company> {
+        return page(
+            pageLimit.convert(), KtQueryWrapper(Company::class.java)
                 .eq(!companyCode.isNullOrEmpty(), Company::companyCode, companyCode)
-        )
+                .like(!companyName.isNullOrEmpty(), Company::companyName, companyName)
+                .eq(Company::active, true)
+        ).convert()
     }
 
     override fun addCompany(addCompany: AddOrUpdateCompany): RestValue<Boolean> {
@@ -50,6 +52,12 @@ class CompanyService : ICompanyService, ServiceImpl<ICompanyMapper, Company>() {
     override fun updateCompany(companyId: Int, updateCompany: AddOrUpdateCompany): RestValue<Boolean> {
         val company = this.getById(companyId)
         company ?: return failedOf(IErrorCode.DataNotExists, "CompanyId [$companyId] not exists")
+
+        val companyCodeCount = this.count(KtQueryWrapper(Company::class.java).eq(Company::companyCode, updateCompany.companyCode))
+        if (companyCodeCount > 0) {
+            return failedOf(IErrorCode.DataExists, "companyCode is exist data")
+        }
+
         company.apply {
             companyCode = updateCompany.companyCode
             companyName = updateCompany.companyName

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import java.util.*
 
 data class AddOrUpdateCompany(
+    var id: Int? = null,
     @field:Schema(required = true)
     var companyCode: String? = null,
     @field:Schema(required = true)

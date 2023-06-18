@@ -48,7 +48,7 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
 
         val res = this.save(model)
         if(res){
-//            applicationEventPublisher.publishEvent(model)
+            applicationEventPublisher.publishEvent(model)
         }
         return okOf(res)
     }
@@ -66,7 +66,7 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
         }
         val res = this.updateById(model)
         if(res){
-//            applicationEventPublisher.publishEvent(model)
+            applicationEventPublisher.publishEvent(model)
         }
         return okOf(res)
     }
@@ -76,7 +76,7 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
         model ?: return failedOf(IErrorCode.DataNotExists, "ModelId [$modelId] not exists")
         val res = this.removeById(modelId)
         if(res){
-//            applicationEventPublisher.publishEvent(model)
+            applicationEventPublisher.publishEvent(model)
         }
         return okOf(res)
     }
@@ -90,7 +90,7 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
         }
         val res = this.updateById(model)
         if(res){
-//            applicationEventPublisher.publishEvent(model)
+            applicationEventPublisher.publishEvent(model)
         }
         return okOf(res)
     }

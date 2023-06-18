@@ -336,20 +336,19 @@ alter table alarm_info
     add point varchar(200) null after status;
 
 -- 2023-04-28
-CREATE TABLE `t_company`
-(
-      `company_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '公司ID',
-      `company_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公司编码',
-      `company_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '企业名称',
-      `simple_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '企业别名',
-      `contact_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系人',
-      `contact_phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系人电话',
-      `begin_create_time` timestamp(0) NULL DEFAULT NULL COMMENT '开通日期',
-      `active` tinyint(2) NULL DEFAULT 1 COMMENT '1有效，0无效',
-      `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-      `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
-      PRIMARY KEY (`company_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `t_company` (
+     `id` int NOT NULL AUTO_INCREMENT COMMENT '公司ID',
+     `company_code` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '公司编码',
+     `company_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '企业名称',
+     `simple_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '企业别名',
+     `contact_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '联系人',
+     `contact_phone` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '联系人电话',
+     `begin_create_time` timestamp NULL DEFAULT NULL COMMENT '开通日期',
+     `active` tinyint DEFAULT '1' COMMENT '1有效，0无效',
+     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+     `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+     PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
 alter table building_info
     add company_id int(11) null after building_id;
@@ -386,7 +385,6 @@ CREATE TABLE `t_model_device` (
 -- 2023-5-11
 ALTER TABLE `t_model_device` CHANGE device_id client_id varchar(64) COMMENT '设备ID';
 ALTER TABLE `t_model_device` ADD device_id VARCHAR(64) NULL COMMENT '网关ID' AFTER client_id;
-ALTER TABLE `t_model` CHANGE model_id id Int(11) NOT NULL COMMENT '模型ID';
 ALTER TABLE `t_model` ADD model_code VARCHAR(64) NOT NULL COMMENT '模型编码' AFTER id;
 ALTER TABLE `t_model_device` MODIFY model_id Int(11) COMMENT '模型ID';
 ALTER TABLE `t_model` CHANGE model_version version_name VARCHAR(20) COMMENT '物模型版本名称';

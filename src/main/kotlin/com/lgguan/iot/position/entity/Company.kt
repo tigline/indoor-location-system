@@ -8,7 +8,7 @@ import java.util.*
 @TableName(value = "t_company")
 class Company {
     @TableId(type = IdType.AUTO)
-    var companyId: String? = null
+    var id: Int? = null
     var companyCode: String? = null
     var companyName: String? = null
     var simpleName: String? = null
