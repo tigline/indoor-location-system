@@ -16,10 +16,11 @@ class WebMvcConfig(private val authInterceptor: AuthInterceptor,
                    private val apiKeyInterceptor: ApiKeyInterceptor): WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(apiKeyInterceptor)
-            .addPathPatterns("/api/v1/model/device")
+            .addPathPatterns("/api/v1/company/sync")
         registry.addInterceptor(requestLogInterceptor)
         registry.addInterceptor(authInterceptor)
             .excludePathPatterns("/api/v1/register", "/api/v1/login", "/api/v1/refreshToken", "/test/**",
-                "/v3/api-docs/**", "/doc.html", "/swagger-ui/**", "/webjars/**", "/favicon.ico", "/api/v1/model/device")
+                "/v3/api-docs/**", "/doc.html", "/swagger-ui/**",
+                "/webjars/**", "/favicon.ico", "/api/v1/company/sync")
     }
 }

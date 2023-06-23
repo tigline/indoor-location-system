@@ -20,4 +20,8 @@ fun HttpServletRequest.getApiKey(): String = this.getHeader("api_key")
 
 fun getApiKey() = getRequest().getApiKey()
 
+fun HttpServletRequest.getLanguage(): String = this.getHeader("lang")
+
+fun getLanguage() = getRequest().getLanguage()
+
 fun getRole() = tokenCache.getIfPresent(getToken())?.role

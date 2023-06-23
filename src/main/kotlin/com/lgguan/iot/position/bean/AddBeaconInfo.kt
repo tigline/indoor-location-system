@@ -17,5 +17,6 @@ data class AddBeaconInfo(
     val mac: String? = null,
     val mapId: String? = null,
     val groupId: String? = null,
+    val zoneId: String? = null,
     val productName: String? = null
 )

@@ -20,6 +20,8 @@ data class AoaData(
     val type: String,
     @JsonProperty("mac")
     val mac: String? = null,
+    @JsonProperty("zoneId")
+    val zoneId: String? = null,
     @JsonProperty("motion")
     val motion: String? = null,
     @JsonProperty("opt_scale")

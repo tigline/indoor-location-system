@@ -46,11 +46,7 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
             createTime = Date()
         }
 
-        val res = this.save(model)
-        if(res){
-            applicationEventPublisher.publishEvent(model)
-        }
-        return okOf(res)
+        return okOf(this.save(model))
     }
 
     override fun updateModel(modelId: Int, updateModel: AddOrUpdateModel): RestValue<Boolean> {
@@ -64,21 +60,15 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
             model.topics = JSONUtil.parseArray(updateModel.topics)
             model.updateTime = Date()
         }
-        val res = this.updateById(model)
-        if(res){
-            applicationEventPublisher.publishEvent(model)
-        }
-        return okOf(res)
+
+        return okOf(this.updateById(model))
     }
 
     override fun deleteModel(modelId: Int): RestValue<Boolean> {
         val model = this.getById(modelId);
         model ?: return failedOf(IErrorCode.DataNotExists, "ModelId [$modelId] not exists")
-        val res = this.removeById(modelId)
-        if(res){
-            applicationEventPublisher.publishEvent(model)
-        }
-        return okOf(res)
+
+        return okOf(this.removeById(modelId))
     }
 
     override fun updateModelActive(modelId: Int, active: Boolean): RestValue<Boolean> {
@@ -88,11 +78,8 @@ class ModelService(val applicationEventPublisher: ApplicationEventPublisher): IM
             model.active = active
             updateTime = Date()
         }
-        val res = this.updateById(model)
-        if(res){
-            applicationEventPublisher.publishEvent(model)
-        }
-        return okOf(res)
+
+        return okOf(this.updateById(model))
     }
 
     override fun getAllModelInfo(): RestValue<List<IotModelResponse>> {

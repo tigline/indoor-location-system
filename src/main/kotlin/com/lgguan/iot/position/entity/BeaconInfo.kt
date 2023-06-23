@@ -21,6 +21,7 @@ class BeaconInfo : Model<BeaconInfo>() {
     var gateway: String? = null
     var mapId: String? = null
     var groupId: String? = null
+    var zoneId: String? = null
     var name: String? = null
     var productName: String? = null
     var systemId: String? = null

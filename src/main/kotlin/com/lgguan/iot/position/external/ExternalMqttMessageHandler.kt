@@ -41,6 +41,7 @@ class ExternalMqttMessageHandler(val externalFenceHandler: ExternalFenceHandler)
                         gateway = aoaData.gateway
                         mapId = gatewayInfo?.mapId ?: mapId
                         systemId = aoaData.systemId
+                        zoneId = aoaData.zoneId
                         motion = aoaData.motion
                         optScale = aoaData.optScale
                         positionType = aoaData.positionType
@@ -51,6 +52,7 @@ class ExternalMqttMessageHandler(val externalFenceHandler: ExternalFenceHandler)
                     }.updateById()
                     aoaDataInfo.type = beaconInfo.type
                     aoaDataInfo.mapId = beaconInfo.mapId
+                    aoaDataInfo.zoneId = beaconInfo.zoneId
                     aoaDataInfo.status = if (beaconInfo.motion == "freezing") 0 else 1
                     aoaDataInfo.insert()
                     CoroutineScope(Dispatchers.IO).launch {

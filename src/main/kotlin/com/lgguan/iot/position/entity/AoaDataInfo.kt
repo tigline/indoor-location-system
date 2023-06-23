@@ -18,6 +18,7 @@ class AoaDataInfo: Model<AoaDataInfo>() {
     var deviceId: String? = null
     var type: BeaconType? = null
     var mapId: String? = null
+    var zoneId: String? = null
     var optScale: Float? = null
     var posX: Float? = null
     var posY: Float? = null
@@ -29,6 +30,7 @@ class AoaDataInfo: Model<AoaDataInfo>() {
         deviceId = other.deviceId
         type = other.type
         mapId = other.mapId
+        zoneId = other.mapId
         optScale = other.optScale
         posX = other.posX
         posY = other.posY

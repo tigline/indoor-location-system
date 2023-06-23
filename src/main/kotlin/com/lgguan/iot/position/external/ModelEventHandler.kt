@@ -10,15 +10,15 @@ import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
-@Component
+//@Component
 class ModelEventHandler(val modelService: ModelService,
                         val rabbitTemplate: RabbitTemplate,
                         val rabbitmqConfig: RabbitmqConfig) {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Async
-    @EventListener
+//    @Async
+//    @EventListener
     fun modelUpdateEventHandle(model: Model) {
         log.info("event model:" + JSONUtil.toJsonStr(model))
         val modelData = model.id?.let { modelService.getModelInfoByModelId(it) }

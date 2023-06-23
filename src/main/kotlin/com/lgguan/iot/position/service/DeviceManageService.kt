@@ -136,6 +136,7 @@ class DeviceManageService(
             gateway = addBeaconInfo.gateway
             mapId = addBeaconInfo.mapId
             groupId = addBeaconInfo.groupId
+            zoneId = addBeaconInfo.zoneId
             name = addBeaconInfo.name
             productName = addBeaconInfo.productName
             status = BindStatus.Unbound
