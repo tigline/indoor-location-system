@@ -36,7 +36,7 @@ class TaskQueueService(
     }
 
     // 处理任务队列
-    @Scheduled(fixedRate = 500) // 每500ms执行一次
+    @Scheduled(fixedRate = 100) // 每500ms执行一次
     fun processTaskQueue() {
         val taskJson = listOperations.leftPop(TASK_QUEUE_KEY)
         if (taskJson != null) {

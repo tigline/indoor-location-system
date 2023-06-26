@@ -38,30 +38,18 @@ class GatewayAndBeaconService {
     }
 
     fun handleAoaData(aoaData: AoaData, externalFenceHandler: ExternalFenceHandler) {
-//        val gatewayId = aoaData.gateway
-//        val deviceId = aoaData.nodeId
 
         val gatewayInfo: GatewayInfo = getGatewayInfoFromRedis(aoaData.gateway)
-        val aoaDataInfo = aoaData.toInfo()
-        val beaconInfo: BeaconInfo = getBeaconInfoFromRedis(aoaDataInfo.deviceId.toString())
+
+        val beaconInfo: BeaconInfo? = getBeaconInfoFromRedis(aoaData.nodeId)
 
         if (beaconInfo != null) {
             val prevPoint = Point(beaconInfo.posX ?: 0f, beaconInfo.posY ?: 0f)
-
+            val aoaDataInfo = aoaData.toInfo()
             aoaDataInfo.mapId = gatewayInfo?.mapId
 
             aoaDataInfo.type = beaconInfo?.type
 
-            CoroutineScope(Dispatchers.IO).launch {
-                log.info("Received AoaDataInfo message: ${aoaDataInfo}")
-                sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))
-                if ("freezing" != beaconInfo.motion) {
-                    externalFenceHandler.emit(beaconInfo to prevPoint)
-                }
-            }
-
-
-            aoaDataTask.addTaskToQueue("AoaDataInfo", aoaDataInfo)
             beaconInfo.apply {
                 mac = aoaData.mac
                 gateway = aoaData.gateway
@@ -75,6 +63,17 @@ class GatewayAndBeaconService {
                 online = true
                 updateTime = aoaDataInfo.timestamp
             }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                log.info("Received AoaDataInfo message: ${aoaDataInfo}")
+                sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))
+                if ("freezing" != beaconInfo.motion) {
+                    externalFenceHandler.emit(beaconInfo to prevPoint)
+                }
+            }
+
+            aoaDataTask.addTaskToQueue("AoaDataInfo", aoaDataInfo)
+
             aoaDataTask.addTaskToQueue("BeaconInfo", beaconInfo)
 
         }
