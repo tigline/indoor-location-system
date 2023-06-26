@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.lgguan.iot"
-version = "1.0.14"
+version = "1.0.15"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.register("saveVersion") {
