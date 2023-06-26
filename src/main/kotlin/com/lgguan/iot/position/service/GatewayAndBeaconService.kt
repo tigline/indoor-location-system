@@ -46,7 +46,7 @@ class GatewayAndBeaconService {
         val beaconInfo: BeaconInfo = getBeaconInfoFromRedis(aoaDataInfo.deviceId.toString())
 
         if (beaconInfo != null) {
-//            val prevPoint = Point(beaconInfo.posX ?: 0f, beaconInfo.posY ?: 0f)
+            val prevPoint = Point(beaconInfo.posX ?: 0f, beaconInfo.posY ?: 0f)
 
             aoaDataInfo.mapId = gatewayInfo?.mapId
 
@@ -55,9 +55,9 @@ class GatewayAndBeaconService {
             CoroutineScope(Dispatchers.IO).launch {
                 log.info("Received AoaDataInfo message: ${aoaDataInfo}")
                 sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))
-//                if ("freezing" != beaconInfo.motion) {
-//                    externalFenceHandler.emit(beaconInfo to prevPoint)
-//                }
+                if ("freezing" != beaconInfo.motion) {
+                    externalFenceHandler.emit(beaconInfo to prevPoint)
+                }
             }
 
 
@@ -79,9 +79,8 @@ class GatewayAndBeaconService {
 
         }
 
-        // Now you have GatewayInfo and BeaconInfo, you can process aoaData...
     }
-    //redisTemplate.opsForValue().set("beacon:$deviceId", beaconInfo)
+
     private fun getGatewayInfoFromRedis(gatewayId: String): GatewayInfo {
         val gatewayInfo = redisTemplate.opsForValue().get("gateway:$gatewayId")
         if (gatewayInfo != null) {
