@@ -17,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import org.springframework.beans.factory.annotation.Autowired
+import com.lgguan.iot.position.service.GatewayAndBeaconService
 
 /**
  *
@@ -26,40 +28,67 @@ import org.springframework.stereotype.Component
 @Component
 class ExternalMqttMessageHandler(val externalFenceHandler: ExternalFenceHandler) {
     private val log = LoggerFactory.getLogger(javaClass)
+    @Autowired
+    private lateinit var aoaDataService:GatewayAndBeaconService
     fun handler(topic: String, payload: String) {
         when (topic) {
 
             "/ips/pub/AOA_data" -> {
                 val aoaData = objectMapper.readValue(payload, AoaData::class.java)
-                val aoaDataInfo = aoaData.toInfo()
-                val beaconInfo = BeaconInfo().selectById(aoaDataInfo.deviceId)
-                if (beaconInfo != null) {
-                    val prevPoint = Point(beaconInfo.posX ?: 0f, beaconInfo.posY ?: 0f)
-                    val gatewayInfo: GatewayInfo? = GatewayInfo().selectById(aoaData.gateway)
-                    beaconInfo.apply {
-                        mac = aoaData.mac
-                        gateway = aoaData.gateway
-                        mapId = gatewayInfo?.mapId ?: mapId
-                        systemId = aoaData.systemId
-                        motion = aoaData.motion
-                        optScale = aoaData.optScale
-                        positionType = aoaData.positionType
-                        posX = aoaData.posX
-                        posY = aoaData.posY
-                        online = true
-                        updateTime = aoaDataInfo.timestamp
-                    }.updateById()
-                    aoaDataInfo.type = beaconInfo.type
-                    aoaDataInfo.mapId = beaconInfo.mapId
-                    aoaDataInfo.status = if (beaconInfo.motion == "freezing") 0 else 1
-                    aoaDataInfo.insert()
-                    CoroutineScope(Dispatchers.IO).launch {
-                        sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))
-                        if ("freezing" != beaconInfo.motion) {
-                            externalFenceHandler.emit(beaconInfo to prevPoint)
-                        }
-                    }
-                }
+
+                aoaDataService.handleAoaData(aoaData, externalFenceHandler)
+
+//                val aoaDataInfo = aoaData.toInfo()
+//                val beaconInfo = BeaconInfo().selectById(aoaDataInfo.deviceId)
+
+
+//                if (beaconInfo != null) {
+//                    val prevPoint = Point(beaconInfo.posX ?: 0f, beaconInfo.posY ?: 0f)
+//                    val gatewayInfo: GatewayInfo? = GatewayInfo().selectById(aoaData.gateway)
+//
+//                    //这里发送socket
+//                    aoaDataInfo.type = beaconInfo.type
+//                    aoaDataInfo.mapId = gatewayInfo?.mapId
+//                    CoroutineScope(Dispatchers.IO).launch {
+//                        log.info("Received [$topic] message: ${aoaDataInfo.id} ${aoaDataInfo.posX}")
+//                        sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))
+//                        if ("freezing" != beaconInfo.motion) {
+//                            externalFenceHandler.emit(beaconInfo to prevPoint)
+//                        }
+//                    }
+//
+//                    //使用异步插入数据aoaDataInfo
+//                    CoroutineScope(Dispatchers.IO).launch {
+//
+//                        beaconInfo.apply {
+//                            mac = aoaData.mac
+//                            gateway = aoaData.gateway
+//                            mapId = gatewayInfo?.mapId ?: mapId
+//                            systemId = aoaData.systemId
+//                            motion = aoaData.motion
+//                            optScale = aoaData.optScale
+//                            positionType = aoaData.positionType
+//                            posX = aoaData.posX
+//                            posY = aoaData.posY
+//                            online = true
+//                            updateTime = aoaDataInfo.timestamp
+//                        }.updateById()
+//
+//                        aoaDataInfo.insert()
+//                    }
+
+
+
+
+                    //地图应该是拿到beaconInfo显示有哪些定位目标
+                    //socket 消息去更新这些beaconInfo的位置 ？？？
+
+
+
+
+
+
+//                }
             }
 
             "/ips/pub/station_online_status" -> {

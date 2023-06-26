@@ -4,22 +4,28 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ips?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
-    username: lgguan
-    password: Lgguan@2023
+    url: jdbc:mysql://192.168.0.10:3306/ips?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
+    username: ichiken
+    password: 102938
+
+  data:
+    redis:
+      host: 192.168.0.10
+      port: 6379
+      password: 102938
 
 mqtt:
-  url: tcp://127.0.0.1:1883
+  url: tcp://192.168.0.10:1883
   client-id: ${random.uuid}
-  username: lgguan
-  password: Lgguan@2023
+  username: ichiken
+  password: ichiken2023
   subscribe-topics:
     - /ips/pub/AOA_data
     - /ips/pub/station_online_status
     - /ips/pub/AOA_Station_His
 
 external:
-  url: http://127.0.0.1:8888/
+  url: http://192.168.0.10:8888/
 
 springdoc:
   swagger-ui:
@@ -41,7 +47,7 @@ mybatis-plus:
 
 indoor:
   file:
-#    path: /app/data/fserver/files
-    path: C:\indoor
+    path: /Users/aaron/Desktop/dockerxx/files
+    #path: C:\indoor
     prefix: /download
-    domain: 127.0.0.1:8080
+    domain: 192.168.0.17:9050

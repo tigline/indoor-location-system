@@ -38,6 +38,7 @@ fun AoaData.toInfo(): AoaDataInfo {
     info.optScale = optScale
     info.posX = posX
     info.posY = posY
+    info.status = if (motion == "freezing") 0 else 1
     info.timestamp = DateUtil.currentSeconds()
     return info
 }
