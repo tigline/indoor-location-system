@@ -136,7 +136,6 @@ class CompanyService : ICompanyService, ServiceImpl<ICompanyMapper, Company>() {
                     updateTime = Date()
                 }
                 this.updateById(companyEntity)
-                System.out.print("111111111111111")
             }
         } else {
             val entity = Company().apply {

@@ -429,3 +429,10 @@ CREATE TABLE `t_command_record` (
     `update_time` datetime DEFAULT NULL COMMENT '更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='指令执行记录表';
+
+-- 2023-6-27
+ALTER TABLE `beacon_info` ADD company_code VARCHAR(100) NULL COMMENT '厂商编码' AFTER product_name;
+ALTER TABLE `beacon_info` ADD pos_z FLOAT(10) NULL COMMENT 'z' AFTER pos_y;
+ALTER TABLE `aoa_data_info` ADD gateway_id VARCHAR(64) NULL COMMENT '网关设备ID' AFTER device_id;
+ALTER TABLE `aoa_data_info` ADD pos_z FLOAT(10) NULL COMMENT 'z' AFTER pos_y;
+ALTER TABLE `aoa_data_info` ADD create_time datetime NULL COMMENT '创建时间' AFTER timestamp;

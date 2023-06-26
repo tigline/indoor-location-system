@@ -34,6 +34,7 @@ class BeaconInfo : Model<BeaconInfo>() {
     var positionType: String? = null
     var posX: Float? = null
     var posY: Float? = null
+    var posZ: Float? = null
     var updateTime: Long? = null
     var extraInfo: String? = null
 }

@@ -32,6 +32,8 @@ data class AoaData(
     val posX: Float? = null,
     @JsonProperty("y")
     val posY: Float? = null,
+    @JsonProperty("z")
+    val posZ: Float? = null,
     @JsonProperty("online")
     val online: String? = null
 )
@@ -42,6 +44,7 @@ fun AoaData.toInfo(): AoaDataInfo {
     info.optScale = optScale
     info.posX = posX
     info.posY = posY
+    info.posZ = posZ
     info.timestamp = DateUtil.currentSeconds()
     return info
 }
