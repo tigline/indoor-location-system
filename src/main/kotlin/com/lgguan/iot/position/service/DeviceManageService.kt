@@ -54,6 +54,7 @@ class DeviceManageService(
             setY = addGatewayInfo.setY
             setZ = addGatewayInfo.setZ
             angle = addGatewayInfo.angle
+            companyCode = addGatewayInfo.companyCode
             updateTime = DateUtil.currentSeconds()
         }
         val save = gatewayInfoService.save(gatewayInfo)
@@ -141,6 +142,7 @@ class DeviceManageService(
             productName = addBeaconInfo.productName
             status = BindStatus.Unbound
             type = addBeaconInfo.type
+            companyCode = addBeaconInfo.companyCode
         }
         val save = beaconInfoService.save(beaconInfo)
         return okOf(save)

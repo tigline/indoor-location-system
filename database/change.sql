@@ -439,3 +439,4 @@ ALTER TABLE `aoa_data_info` ADD create_time datetime NULL COMMENT '创建时间'
 
 -- 2023-6-28
 ALTER TABLE `gateway_info` ADD zone_id VARCHAR(30) NULL COMMENT 'zone' AFTER map_id;
+ALTER TABLE `gateway_info` ADD company_code VARCHAR(100) NULL COMMENT '厂商编码' AFTER group_id;

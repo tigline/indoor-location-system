@@ -37,4 +37,5 @@ class BeaconInfo : Model<BeaconInfo>() {
     var posZ: Float? = null
     var updateTime: Long? = null
     var extraInfo: String? = null
+    var companyCode: String? = null
 }

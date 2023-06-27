@@ -18,5 +18,6 @@ data class AddGatewayInfo(
     val setX: Float? = null,
     val setY: Float? = null,
     val setZ: Float? = null,
-    val angle: Float? = null
+    val angle: Float? = null,
+    var companyCode: String? = null
 )

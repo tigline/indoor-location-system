@@ -35,4 +35,5 @@ class GatewayInfo: Model<GatewayInfo>() {
     var updateTime: Long? = null
     var extraInfo: String? = null
     var zoneId: String? = null
+    var companyCode: String? = null
 }
