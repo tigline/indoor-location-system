@@ -11,7 +11,7 @@ import java.io.Serializable
 @NoArgsConstructor
 @AllArgsConstructor
 class IotStationData : Serializable {
-    var ipaddress: String? = null
+    var ip: String? = null
     var mac: String? = null
     var gateway: String? = null
     var type: String? = null
@@ -19,9 +19,9 @@ class IotStationData : Serializable {
     var time: Long? = null
     var mapId: String? = null
     var zoneId: String? = null
-    var hisX: Double? = null
-    var hisY: Double? = null
-    var hisZ: Double? = null
+    var hisX: Float? = null
+    var hisY: Float? = null
+    var hisZ: Float? = null
     var angles: String? = null
     var online: Int? = null
 }

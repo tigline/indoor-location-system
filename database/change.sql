@@ -436,3 +436,6 @@ ALTER TABLE `beacon_info` ADD pos_z FLOAT(10) NULL COMMENT 'z' AFTER pos_y;
 ALTER TABLE `aoa_data_info` ADD gateway_id VARCHAR(64) NULL COMMENT '网关设备ID' AFTER device_id;
 ALTER TABLE `aoa_data_info` ADD pos_z FLOAT(10) NULL COMMENT 'z' AFTER pos_y;
 ALTER TABLE `aoa_data_info` ADD create_time datetime NULL COMMENT '创建时间' AFTER timestamp;
+
+-- 2023-6-28
+ALTER TABLE `gateway_info` ADD zone_id VARCHAR(30) NULL COMMENT 'zone' AFTER map_id;

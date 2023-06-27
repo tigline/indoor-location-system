@@ -34,4 +34,5 @@ class GatewayInfo: Model<GatewayInfo>() {
     var hisZ: Float? = null
     var updateTime: Long? = null
     var extraInfo: String? = null
+    var zoneId: String? = null
 }
