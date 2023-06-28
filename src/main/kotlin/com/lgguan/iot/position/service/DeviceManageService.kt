@@ -227,7 +227,7 @@ class DeviceManageService(
 
 
         // 滑动窗口滤波
-        val windowSize = param.filterValue ?: 0
+        val windowSize = param.filterValue ?: 1
         val filteredList = mutableListOf<AoaDataInfo>()
         for (i in windowSize until preprocessedList.size - windowSize) {
             val subList = preprocessedList.subList(i - windowSize, i + windowSize + 1)
