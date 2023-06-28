@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component
 import java.util.*
 import java.util.function.Function
 import java.util.stream.Collectors
-import kotlin.collections.ArrayList
 
 @Component
 class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
@@ -79,6 +78,7 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
 
                 val aoaDataInfoList = ArrayList<AoaDataInfo>()
                 val beaconInfoUpdates = ArrayList<BeaconInfo>()
+                var gatewayInfoMaps: Map<String, GatewayInfo> = getGatewayInfoByIds(beaconDataList)
                 val iotBeaconDataMap = beaconDataList.stream()
                     .collect(Collectors.toMap(IotBeaconData::beaconId, Function.identity()))
                 val beaconInfos: List<BeaconInfo> = beaconInfoService.listByIds(iotBeaconDataMap.keys)
@@ -86,7 +86,6 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                     val aoaDataInfo = iotBeaconDataMap[it.deviceId]?.let { it1 -> getAoaDataInfo(it1) }
                     if (aoaDataInfo != null) {
                         it.gateway = aoaDataInfo?.gatewayId
-                        it.mapId = aoaDataInfo?.mapId
                         it.zoneId = aoaDataInfo?.zoneId
                         it.optScale = aoaDataInfo?.optScale
                         it.posX = aoaDataInfo?.posX
@@ -94,6 +93,13 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                         it.posZ = aoaDataInfo?.posZ
                         it.updateTime = aoaDataInfo?.timestamp
                         it.online = true
+                        if(Objects.nonNull(aoaDataInfo.mapId)){
+                            it.mapId = aoaDataInfo.mapId
+                        }else{
+                            val gatewayInfo: GatewayInfo? = gatewayInfoMaps[aoaDataInfo.gatewayId]
+                            it.mapId = gatewayInfo?.mapId
+                            aoaDataInfo.mapId = gatewayInfo?.mapId
+                        }
                         beaconInfoUpdates.add(it)
                         aoaDataInfoList.add(aoaDataInfo)
                     }
@@ -111,6 +117,17 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                 log.warn("Unsupported topic: [$topic], companyCode: [$companyCode], type: [$type]")
             }
         }
+    }
+
+    private fun getGatewayInfoByIds(beaconDataList: List<IotBeaconData>): Map<String, GatewayInfo> {
+        if (CollectionUtils.isNotEmpty(beaconDataList)){
+            val gatewayIds: List<String> = beaconDataList.stream().map<String>(IotBeaconData::gateway).distinct().collect(Collectors.toList())
+            val gatewayInfos: List<GatewayInfo> = gatewayInfoService.listByIds(gatewayIds);
+            if(CollectionUtils.isNotEmpty(gatewayInfos)){
+                return gatewayInfos.stream().collect(Collectors.toMap(GatewayInfo::gateway, Function.identity()))
+            }
+        }
+        return HashMap()
     }
 
     private fun getAoaDataInfo(iotBeaconData: IotBeaconData): AoaDataInfo {
