@@ -26,6 +26,7 @@ class MqttRabbitmqConsumer(val messageHandler: ExternalAllMessageHandler) {
                       @Header("sn") sn: String,
                       @Payload payload: String) {
         try {
+            channel.basicAck(deliveryTag, true)
             log.info("rabbitmq consumer data payload:$payload")
             log.info("rabbitmq consumer data companyCode:$companyCode")
             log.info("rabbitmq consumer data modelCode:$modelCode")
@@ -34,9 +35,7 @@ class MqttRabbitmqConsumer(val messageHandler: ExternalAllMessageHandler) {
             log.info("rabbitmq consumer data topic:$topic")
             messageHandler.handler(payload, topic, companyCode, type)
         } catch (e:Exception) {
-            log.error("mqttDataQueue error:" + e.message);
-        }finally{
-            channel.basicAck(deliveryTag, false);
+            log.error("mqttDataQueue error:" + e.message)
         }
     }
 }
