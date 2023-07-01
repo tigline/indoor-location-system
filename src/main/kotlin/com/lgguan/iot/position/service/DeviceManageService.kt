@@ -79,6 +79,7 @@ class DeviceManageService(
         gatewayInfo.apply {
             name = updateGateway.name
             mapId = updateGateway.mapId
+            companyCode = updateGateway.companyCode
             setX = updateGateway.setX
             setY = updateGateway.setY
             setZ = updateGateway.setZ
@@ -154,6 +155,7 @@ class DeviceManageService(
         beaconInfo.apply {
             name = updateBeacon.name
             type = updateBeacon.type
+            companyCode = updateBeacon.companyCode
             fenceIds = updateBeacon.fenceIds
         }
         val res = beaconInfoService.updateById(beaconInfo)
@@ -223,7 +225,7 @@ class DeviceManageService(
 
 
         // 滑动窗口滤波
-        val windowSize = param.filterValue ?: 0
+        val windowSize = param.filterValue ?: 1
         val filteredList = mutableListOf<AoaDataInfo>()
         for (i in windowSize until preprocessedList.size - windowSize) {
             val subList = preprocessedList.subList(i - windowSize, i + windowSize + 1)

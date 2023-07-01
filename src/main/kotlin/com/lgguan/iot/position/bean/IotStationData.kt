@@ -24,4 +24,10 @@ class IotStationData : Serializable {
     var hisZ: Float? = null
     var angles: String? = null
     var online: Int? = null
+
+
+    fun realGateway():String? {
+        return gateway?.replace(":", "")
+    }
+
 }

@@ -10,16 +10,17 @@ import com.lgguan.iot.position.entity.GatewayInfo
 import com.lgguan.iot.position.service.IAoaDataInfoService
 import com.lgguan.iot.position.service.IBeaconInfoService
 import com.lgguan.iot.position.service.IGatewayInfoService
-import com.lgguan.iot.position.util.Point
 import com.lgguan.iot.position.util.objectMapper
 import com.lgguan.iot.position.ws.sendWsMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import org.apache.commons.collections.CollectionUtils
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
+import com.lgguan.iot.position.util.Point
 import java.util.*
 import java.util.function.Function
 import java.util.stream.Collectors
@@ -33,7 +34,7 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
 
     val TYPE_LOCATORS = "locators" //基站
     val TYPE_SENSORS = "sensors" //信标
-
+    private val dbDispatcher = newSingleThreadContext("DBDispatcher")
     fun handler(payload: String, topic: String, companyCode: String, type: String){
         when (type) {
 
@@ -45,7 +46,7 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                 }
                 log.info("station gateway data: "+JSONUtil.toJsonStr(stationDataList))
                 val stationDataMap = stationDataList.stream()
-                    .collect(Collectors.toMap(IotStationData::gateway, Function.identity()))
+                    .collect(Collectors.toMap(IotStationData::realGateway, Function.identity()))
                 val gatewayInfos: List<GatewayInfo> = gatewayInfoService.listByIds(stationDataMap.keys)
                 if(CollectionUtils.isNotEmpty(gatewayInfos)){
                     gatewayInfos.forEach { gatewayInfo ->
@@ -57,11 +58,12 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                             gatewayInfo.extraInfo = stationData.angles
                             gatewayInfo.name = stationData.name
 //                            gatewayInfo.type = stationData.type
-                            gatewayInfo.mapId = stationData.mapId
+                            //gatewayInfo.mapId = stationData.mapId
                             gatewayInfo.zoneId = stationData.zoneId
                             gatewayInfo.hisX = stationData.hisX
                             gatewayInfo.hisY = stationData.hisY
                             gatewayInfo.hisZ = stationData.hisZ
+
                         }
                     }
                     gatewayInfoService.batchUpdate(gatewayInfos)
@@ -79,27 +81,31 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                 val aoaDataInfoList = ArrayList<AoaDataInfo>()
                 val beaconInfoUpdates = ArrayList<BeaconInfo>()
                 var gatewayInfoMaps: Map<String, GatewayInfo> = getGatewayInfoByIds(beaconDataList)
+
                 val iotBeaconDataMap = beaconDataList.stream()
                     .collect(Collectors.toMap(IotBeaconData::beaconId, Function.identity()))
+                //beaconInfos 为存在的数据库
                 val beaconInfos: List<BeaconInfo> = beaconInfoService.listByIds(iotBeaconDataMap.keys)
+
                 beaconInfos.forEach {
                     val aoaDataInfo = iotBeaconDataMap[it.deviceId]?.let { it1 -> getAoaDataInfo(it1) }
+                    //var dbBeaconInfo = BeaconInfo().
                     if (aoaDataInfo != null) {
                         it.gateway = aoaDataInfo?.gatewayId
                         it.zoneId = aoaDataInfo?.zoneId
                         it.optScale = aoaDataInfo?.optScale
+                        it.prevPoint = Point(it.posX ?: 0f, it.posY ?: 0f)
                         it.posX = aoaDataInfo?.posX
                         it.posY = aoaDataInfo?.posY
                         it.posZ = aoaDataInfo?.posZ
                         it.updateTime = aoaDataInfo?.timestamp
                         it.online = true
-                        if(Objects.nonNull(aoaDataInfo.mapId)){
-                            it.mapId = aoaDataInfo.mapId
-                        }else{
-                            val gatewayInfo: GatewayInfo? = gatewayInfoMaps[aoaDataInfo.gatewayId]
-                            it.mapId = gatewayInfo?.mapId
-                            aoaDataInfo.mapId = gatewayInfo?.mapId
-                        }
+                        it.motion = if (aoaDataInfo.status == 1) "moving" else "freezing"
+                        val gatewayInfo: GatewayInfo? = gatewayInfoMaps[aoaDataInfo.gatewayId]
+                        it.mapId = gatewayInfo?.mapId
+                        aoaDataInfo.mapId = gatewayInfo?.mapId
+                        aoaDataInfo.type = it.type
+
                         beaconInfoUpdates.add(it)
                         aoaDataInfoList.add(aoaDataInfo)
                     }
@@ -107,9 +113,11 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
 
                 if(CollectionUtils.isNotEmpty(beaconInfoUpdates)
                     && CollectionUtils.isNotEmpty(aoaDataInfoList)){
-                    beaconInfoService.batchUpdate(beaconInfoUpdates)
-                    aoaDataInfoService.batchInsert(aoaDataInfoList)
                     asyncSendMessage(beaconInfoUpdates, aoaDataInfoList)
+                    CoroutineScope(dbDispatcher).launch {
+                        beaconInfoService.batchUpdate(beaconInfoUpdates)
+                        aoaDataInfoService.batchInsert(aoaDataInfoList)
+                    }
                 }
             }
 
@@ -130,6 +138,17 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
         return HashMap()
     }
 
+    private fun getBeaconInfoByIds(beaconDataList: List<IotBeaconData>): Map<String, BeaconInfo> {
+        if (CollectionUtils.isNotEmpty(beaconDataList)){
+            val beaconIds: List<String> = beaconDataList.stream().map<String>(IotBeaconData::beaconId).distinct().collect(Collectors.toList())
+            val beaconInfos: List<BeaconInfo> = beaconInfoService.listByIds(beaconIds);
+            if(CollectionUtils.isNotEmpty(beaconInfos)){
+                return beaconInfos.stream().collect(Collectors.toMap(BeaconInfo::deviceId, Function.identity()))
+            }
+        }
+        return HashMap()
+    }
+
     private fun getAoaDataInfo(iotBeaconData: IotBeaconData): AoaDataInfo {
         val aoaDataInfo = AoaDataInfo()
         aoaDataInfo.deviceId = iotBeaconData.beaconId
@@ -140,6 +159,7 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
         aoaDataInfo.timestamp = if(Objects.nonNull(iotBeaconData.time)) iotBeaconData.time else DateUtil.currentSeconds()
         aoaDataInfo.mapId = iotBeaconData.mapId
         aoaDataInfo.zoneId = iotBeaconData.zoneId
+        aoaDataInfo.status = if(iotBeaconData.motion == "freezing") 0 else 1
         aoaDataInfo.createTime = Date()
         return aoaDataInfo
     }
@@ -153,8 +173,7 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                 CoroutineScope(Dispatchers.IO).launch {
                     sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfoMap[beaconInfo.deviceId]))
                     if ("freezing" != beaconInfo.motion) {
-                        val prevPoint = Point(beaconInfo.posX ?: 0f, beaconInfo.posY ?: 0f)
-                        externalFenceHandler.emit(beaconInfo to prevPoint)
+                        externalFenceHandler.emit(beaconInfo)
                     }
                 }
             }

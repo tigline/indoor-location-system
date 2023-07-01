@@ -58,7 +58,7 @@ class ExternalMqttMessageHandler(val externalFenceHandler: ExternalFenceHandler)
                     CoroutineScope(Dispatchers.IO).launch {
                         sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))
                         if ("freezing" != beaconInfo.motion) {
-                            externalFenceHandler.emit(beaconInfo to prevPoint)
+                            externalFenceHandler.emit(beaconInfo)
                         }
                     }
                 }

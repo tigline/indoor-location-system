@@ -1,11 +1,13 @@
 package com.lgguan.iot.position.entity
 
 import com.baomidou.mybatisplus.annotation.IdType
+import com.baomidou.mybatisplus.annotation.TableField
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import com.baomidou.mybatisplus.extension.activerecord.Model
 import com.lgguan.iot.position.bean.BeaconType
 import com.lgguan.iot.position.bean.BindStatus
+import com.lgguan.iot.position.util.Point
 
 
 /**
@@ -38,4 +40,10 @@ class BeaconInfo : Model<BeaconInfo>() {
     var updateTime: Long? = null
     var extraInfo: String? = null
     var companyCode: String? = null
+
+    @TableField(exist = false)
+    var prevPoint: Point? = null
+
+
+
 }

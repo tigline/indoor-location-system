@@ -103,6 +103,8 @@ class SystemManageService(
             length = updateMapInfo.length
             widthPx = updateMapInfo.widthPx
             lengthPx = updateMapInfo.lengthPx
+            companyCode = updateMapInfo.companyCode
+            coordinateType = updateMapInfo.coordinateType
         }
         val update = mapInfoService.updateById(mapInfo)
         return okOf(update)

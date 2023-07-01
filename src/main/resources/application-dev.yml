@@ -8,15 +8,15 @@ spring:
       maxRequestSize: 200MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.91.146.62:3306/ips?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
+    url: jdbc:mysql://192.168.0.10:3306/ips?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Tokyo
     username: ichiken
     password: 102938
 
   rabbitmq:
-    host: 119.91.146.62
+    host: 192.168.0.10
     port: 5672
-    username: guest
-    password: guest
+    username: ichiken
+    password: 102938
     virtual-host: /
     publisher-confirm-type: CORRELATED
     max-retry: 3
