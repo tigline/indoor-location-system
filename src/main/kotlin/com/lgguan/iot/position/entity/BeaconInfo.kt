@@ -41,9 +41,5 @@ class BeaconInfo : Model<BeaconInfo>() {
     var extraInfo: String? = null
     var companyCode: String? = null
 
-    @TableField(exist = false)
-    var prevPoint: Point? = null
-
-
 
 }
