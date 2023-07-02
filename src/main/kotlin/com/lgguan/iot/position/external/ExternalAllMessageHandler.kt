@@ -12,12 +12,14 @@ import com.lgguan.iot.position.service.IBeaconInfoService
 import com.lgguan.iot.position.service.IGatewayInfoService
 import com.lgguan.iot.position.util.objectMapper
 import com.lgguan.iot.position.ws.sendWsMessage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import org.apache.commons.collections.CollectionUtils
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
-import com.lgguan.iot.position.util.Point
-import kotlinx.coroutines.*
 import java.util.*
 import java.util.function.Function
 import java.util.stream.Collectors
@@ -87,10 +89,11 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                 beaconInfos.forEach {
                     val aoaDataInfo = iotBeaconDataMap[it.deviceId]?.let { it1 -> getAoaDataInfo(it1) }
                     if (aoaDataInfo != null) {
+                        val xy = it.posX.toString() + "," + it.posY.toString()
                         it.gateway = aoaDataInfo?.gatewayId
                         it.zoneId = aoaDataInfo?.zoneId
                         it.optScale = aoaDataInfo?.optScale
-                        it.extraInfo = it.posX.toString() + "," + aoaDataInfo?.timestamp
+                        it.extraInfo = xy
                         it.posX = aoaDataInfo?.posX
                         it.posY = aoaDataInfo?.posY
                         it.posZ = aoaDataInfo?.posZ
@@ -101,7 +104,6 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
                         it.mapId = gatewayInfo?.mapId
                         aoaDataInfo.mapId = gatewayInfo?.mapId
                         aoaDataInfo.type = it.type
-
                         beaconInfoUpdates.add(it)
                         aoaDataInfoList.add(aoaDataInfo)
                     }
