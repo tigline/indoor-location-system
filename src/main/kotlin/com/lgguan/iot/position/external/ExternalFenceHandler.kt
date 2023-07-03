@@ -33,8 +33,8 @@ class ExternalFenceHandler(val fenceInfoService: IFenceInfoService, val beaconIn
                 val fenceIds = beaconInfo.fenceIds?.split(",")?.toList() ?: listOf()
                 val name = beaconInfoService.getBoundNameByDeviceId(beaconInfo.deviceId!!) ?: ""
                 val currentPoint = Point(beaconInfo.posX!!, beaconInfo.posY!!)
-                val floats = beaconInfo.extraInfo?.split(",")?.map { it.toFloat() }
-                var prevPoint = Point(floats?.get(0) ?: 0f, floats?.get(1) ?: 0f)
+                val floats = beaconInfo.extraInfo?.split(",")?.map { it.toDouble() }
+                var prevPoint = Point((floats?.get(0)?: 0) as Double, (floats?.get(1)?: 0) as Double)
                 val currentTime = DateUtil.currentSeconds()
                 fenceInfos.forEach { fenceInfo ->
                     val inRange = currentPoint inRange fenceInfo.points

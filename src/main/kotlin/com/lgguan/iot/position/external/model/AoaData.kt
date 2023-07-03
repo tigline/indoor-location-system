@@ -29,11 +29,11 @@ data class AoaData(
     @JsonProperty("position_type")
     val positionType: String? = null,
     @JsonProperty("x")
-    val posX: Float? = null,
+    val posX: Double? = null,
     @JsonProperty("y")
-    val posY: Float? = null,
+    val posY: Double? = null,
     @JsonProperty("z")
-    val posZ: Float? = null,
+    val posZ: Double? = null,
     @JsonProperty("online")
     val online: String? = null
 )

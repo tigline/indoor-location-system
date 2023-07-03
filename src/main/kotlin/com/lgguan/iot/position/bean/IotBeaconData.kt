@@ -18,11 +18,11 @@ class IotBeaconData : Serializable {
     var type: String? = null
     var mac: String? = null
     var motion: String? = null
-    var optScale: Float? = null
+    var optScale: Double? = null
     var positionType: String? = null
-    var posX: Float? = null
-    var posY: Float? = null
-    var posZ: Float? = null
+    var posX: Double? = null
+    var posY: Double? = null
+    var posZ: Double? = null
     var time: Long? = null
     var mapId: String? = null
     var zoneId: String? = null
