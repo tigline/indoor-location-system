@@ -34,7 +34,7 @@ class ExternalMqttMessageHandler(val externalFenceHandler: ExternalFenceHandler)
                 val aoaDataInfo = aoaData.toInfo()
                 val beaconInfo = BeaconInfo().selectById(aoaDataInfo.deviceId)
                 if (beaconInfo != null) {
-                    val prevPoint = Point(beaconInfo.posX ?: 0f, beaconInfo.posY ?: 0f)
+                    val prevPoint = Point((beaconInfo.posX ?: 0) as Double, (beaconInfo.posY ?: 0) as Double)
                     val gatewayInfo: GatewayInfo? = GatewayInfo().selectById(aoaData.gateway)
                     beaconInfo.apply {
                         mac = aoaData.mac

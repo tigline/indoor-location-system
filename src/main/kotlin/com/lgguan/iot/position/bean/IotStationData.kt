@@ -19,9 +19,9 @@ class IotStationData : Serializable {
     var time: Long? = null
     var mapId: String? = null
     var zoneId: String? = null
-    var hisX: Float? = null
-    var hisY: Float? = null
-    var hisZ: Float? = null
+    var hisX: Double? = null
+    var hisY: Double? = null
+    var hisZ: Double? = null
     var angles: String? = null
     var online: Int? = null
 

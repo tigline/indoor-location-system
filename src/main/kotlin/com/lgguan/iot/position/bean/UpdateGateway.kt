@@ -11,9 +11,9 @@ data class UpdateGateway(
     val name: String? = null,
     @field:Schema(required = true)
     val mapId: String,
-    val setX: Float? = null,
-    val setY: Float? = null,
-    val setZ: Float? = null,
-    val angle: Float? = null,
+    val setX: Double? = null,
+    val setY: Double? = null,
+    val setZ: Double? = null,
+    val angle: Double? = null,
     var companyCode: String? = null
 )

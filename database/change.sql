@@ -448,3 +448,18 @@ ALTER TABLE `map_info` ADD coordinate_type VARCHAR(64) NULL COMMENT '厂商编�
 
 -- 2023-6-30
 ALTER TABLE `aoa_data_info` ADD zone_id VARCHAR(30) NULL COMMENT 'zone' AFTER map_id;
+
+-- 2023-6-30
+ALTER TABLE `beacon_info` MODIFY `pos_x` DOUBLE;
+ALTER TABLE `beacon_info` MODIFY `pos_y` DOUBLE;
+ALTER TABLE `beacon_info` MODIFY `pos_z` DOUBLE;
+ALTER TABLE `aoa_data_info` MODIFY `pos_x` DOUBLE;
+ALTER TABLE `aoa_data_info` MODIFY `pos_y` DOUBLE;
+ALTER TABLE `aoa_data_info` MODIFY `pos_z` DOUBLE;
+ALTER TABLE `gateway_info` MODIFY `set_x` DOUBLE;
+ALTER TABLE `gateway_info` MODIFY `set_y` DOUBLE;
+ALTER TABLE `gateway_info` MODIFY `set_z` DOUBLE;
+ALTER TABLE `gateway_info` MODIFY `angle` DOUBLE;
+ALTER TABLE `gateway_info` MODIFY `his_x` DOUBLE;
+ALTER TABLE `gateway_info` MODIFY `his_y` DOUBLE;
+ALTER TABLE `gateway_info` MODIFY `his_z` DOUBLE;

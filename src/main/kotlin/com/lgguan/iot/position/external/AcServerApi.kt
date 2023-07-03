@@ -10,10 +10,10 @@ interface AcServerApi {
     @GET("/ac/location")
     suspend fun updateGatewayLocation(
         @Query("id") gateway: String,
-        @Query("x") x: Float? = null,
-        @Query("y") y: Float? = null,
-        @Query("z") z: Float? = null,
-        @Query("angle") angle: Float? = 0f,
+        @Query("x") x: Double? = null,
+        @Query("y") y: Double? = null,
+        @Query("z") z: Double? = null,
+        @Query("angle") angle: Double? = null,
         @Query("group") group: String? = null,
         @Query("cmd") cmd: String = "edit_stationaoa"
     ): Any

@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import org.apache.commons.collections.CollectionUtils
 import org.slf4j.LoggerFactory
-import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import java.util.*
 import java.util.function.Function
@@ -162,7 +161,6 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
         return aoaDataInfo
     }
 
-    @Async("wsTaskExecutor")
     fun asyncSendMessage(beaconInfoUpdates: List<BeaconInfo>, aoaDataInfoList: List<AoaDataInfo>) {
         val aoaDataInfoMap = aoaDataInfoList.stream()
             .collect(Collectors.toMap(AoaDataInfo::deviceId, Function.identity()))
@@ -170,6 +168,7 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler,
             if(aoaDataInfoMap.containsKey(beaconInfo.deviceId)){
                 CoroutineScope(Dispatchers.IO).launch {
                     sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfoMap[beaconInfo.deviceId]))
+                    log.info("beaconInfo-------posX:"+beaconInfo.posX + ", posY:"+beaconInfo.posY+", extraInfo:"+beaconInfo.extraInfo)
                     if ("freezing" != beaconInfo.motion) {
                         externalFenceHandler.emit(beaconInfo)
                     }

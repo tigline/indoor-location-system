@@ -15,9 +15,9 @@ data class AddGatewayInfo(
     val groupId: String? = null,
     val productName: String? = null,
     val type: GatewayType? = GatewayType.Gateway,
-    val setX: Float? = null,
-    val setY: Float? = null,
-    val setZ: Float? = null,
-    val angle: Float? = null,
+    val setX: Double? = null,
+    val setY: Double? = null,
+    val setZ: Double? = null,
+    val angle: Double? = null,
     var companyCode: String? = null
 )

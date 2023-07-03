@@ -229,14 +229,14 @@ class DeviceManageService(
         val filteredList = mutableListOf<AoaDataInfo>()
         for (i in windowSize until preprocessedList.size - windowSize) {
             val subList = preprocessedList.subList(i - windowSize, i + windowSize + 1)
-            val avgPosX = subList.map { it.posX ?: 0f }.sum() / subList.size
-            val avgPosY = subList.map { it.posY ?: 0f }.sum() / subList.size
+//            val avgPosX = subList.map { it.posX ?: 0 }.sum() / subList.size
+//            val avgPosY = subList.map { it.posY ?: 0 }.sum() / subList.size
             val filteredInfo = AoaDataInfo()
             filteredInfo.copyFrom(preprocessedList[i])
             filteredInfo.deviceId = param.deviceId
             filteredInfo.mapId = param.mapId
-            filteredInfo.posX = avgPosX
-            filteredInfo.posY = avgPosY
+//            filteredInfo.posX = avgPosX
+//            filteredInfo.posY = avgPosY
             filteredInfo.timestamp = subList.last().timestamp
             filteredList.add(filteredInfo)
         }

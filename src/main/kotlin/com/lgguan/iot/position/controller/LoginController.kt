@@ -83,8 +83,10 @@ class LoginController(
         log.info("Refresh token")
         val tokenPair = refreshToken.refresh()
         val tokenInfo = TokenInfo(
-            accessToken = tokenPair.first.token, accessExpired = tokenPair.first.expired,
-            refreshToken = tokenPair.second.token, refreshExpired = tokenPair.second.expired
+            accessToken = tokenPair.first.token,
+            accessExpired = tokenPair.first.expired,
+            refreshToken = tokenPair.second.token,
+            refreshExpired = tokenPair.second.expired
         )
         val userId = tokenInfo.accessToken.getValueOfKey("userId")!!
         val userInfo = userInfoService.getById(userId)
