@@ -7,6 +7,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.transaction.annotation.EnableTransactionManagement
+import java.util.*
 
 @EnableTransactionManagement
 @SpringBootApplication
@@ -19,5 +20,7 @@ class Application{
 var systemRunningTime = DateUtil.currentSeconds()
 
 fun main(args: Array<String>) {
+    // 设置默认时区
+    TimeZone.setDefault(TimeZone.getTimeZone("Asia/Tokyo"))
     runApplication<Application>(*args)
 }

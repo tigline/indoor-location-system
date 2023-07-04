@@ -11,10 +11,10 @@ import io.swagger.v3.oas.annotations.media.Schema
 data class Point(
     @JsonProperty("x")
     @field:Schema(required = true)
-    val x: Float,
+    val x: Double,
     @JsonProperty("y")
     @field:Schema(required = true)
-    val y: Float
+    val y: Double
 )
 
 infix fun Point.inRange(polygon: List<Point>): Boolean {

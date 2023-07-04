@@ -17,4 +17,10 @@ class MapInfo: Model<MapInfo>() {
     var widthPx: Float? = null
     var lengthPx: Float? = null
     var picture: String? = null
+    var companyCode: String? = null
+    var coordinateType: CoordinateType? = null
+}
+
+enum class CoordinateType {
+    Cartesian, World
 }

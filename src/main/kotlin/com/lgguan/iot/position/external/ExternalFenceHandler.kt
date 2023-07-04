@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class ExternalFenceHandler(val fenceInfoService: IFenceInfoService, val beaconInfoService: IBeaconInfoService) {
-    val aoaDataFlow = MutableSharedFlow<Pair<BeaconInfo, Point>>()
+    val aoaDataFlow = MutableSharedFlow<BeaconInfo>()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            aoaDataFlow.collect { (beaconInfo, prevPoint) ->
+            aoaDataFlow.collect { beaconInfo ->
                 val fenceInfos = fenceListCache.get(beaconInfo.mapId) { mapId ->
                     fenceInfoService.ktQuery()
                         .eq(BeaconInfo::mapId, mapId)
@@ -33,6 +33,8 @@ class ExternalFenceHandler(val fenceInfoService: IFenceInfoService, val beaconIn
                 val fenceIds = beaconInfo.fenceIds?.split(",")?.toList() ?: listOf()
                 val name = beaconInfoService.getBoundNameByDeviceId(beaconInfo.deviceId!!) ?: ""
                 val currentPoint = Point(beaconInfo.posX!!, beaconInfo.posY!!)
+                val floats = beaconInfo.extraInfo?.split(",")?.map { it.toDouble() }
+                var prevPoint = Point((floats?.get(0)?: 0) as Double, (floats?.get(1)?: 0) as Double)
                 val currentTime = DateUtil.currentSeconds()
                 fenceInfos.forEach { fenceInfo ->
                     val inRange = currentPoint inRange fenceInfo.points
@@ -88,7 +90,7 @@ class ExternalFenceHandler(val fenceInfoService: IFenceInfoService, val beaconIn
         }
     }
 
-    suspend fun emit(pair: Pair<BeaconInfo, Point>) {
+    suspend fun emit(pair: BeaconInfo) {
         aoaDataFlow.emit(pair)
     }
 }

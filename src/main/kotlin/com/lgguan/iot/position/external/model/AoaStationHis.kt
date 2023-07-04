@@ -15,9 +15,9 @@ data class AoaStationHis(
     @JsonProperty("Type")
     val type: String,
     @JsonProperty("his_x")
-    val hisX: Float,
+    val hisX: Double,
     @JsonProperty("his_y")
-    val hisY: Float,
+    val hisY: Double,
     @JsonProperty("his_z")
-    val hisZ: Float
+    val hisZ: Double
 )

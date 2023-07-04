@@ -32,10 +32,12 @@ class BeaconInfo : Model<BeaconInfo>() {
     var motion: String? = null
     var optScale: Float? = null
     var positionType: String? = null
-    var posX: Float? = null
-    var posY: Float? = null
-    var posZ: Float? = null
+    var posX: Double? = null
+    var posY: Double? = null
+    var posZ: Double? = null
     var updateTime: Long? = null
     var extraInfo: String? = null
     var companyCode: String? = null
+
+
 }

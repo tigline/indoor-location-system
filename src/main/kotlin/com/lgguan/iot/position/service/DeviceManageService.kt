@@ -79,6 +79,7 @@ class DeviceManageService(
         gatewayInfo.apply {
             name = updateGateway.name
             mapId = updateGateway.mapId
+            companyCode = updateGateway.companyCode
             setX = updateGateway.setX
             setY = updateGateway.setY
             setZ = updateGateway.setZ
@@ -154,6 +155,7 @@ class DeviceManageService(
         beaconInfo.apply {
             name = updateBeacon.name
             type = updateBeacon.type
+            companyCode = updateBeacon.companyCode
             fenceIds = updateBeacon.fenceIds
         }
         val res = beaconInfoService.updateById(beaconInfo)
@@ -223,18 +225,18 @@ class DeviceManageService(
 
 
         // 滑动窗口滤波
-        val windowSize = param.filterValue ?: 0
+        val windowSize = param.filterValue ?: 1
         val filteredList = mutableListOf<AoaDataInfo>()
         for (i in windowSize until preprocessedList.size - windowSize) {
             val subList = preprocessedList.subList(i - windowSize, i + windowSize + 1)
-            val avgPosX = subList.map { it.posX ?: 0f }.sum() / subList.size
-            val avgPosY = subList.map { it.posY ?: 0f }.sum() / subList.size
+//            val avgPosX = subList.map { it.posX ?: 0 }.sum() / subList.size
+//            val avgPosY = subList.map { it.posY ?: 0 }.sum() / subList.size
             val filteredInfo = AoaDataInfo()
             filteredInfo.copyFrom(preprocessedList[i])
             filteredInfo.deviceId = param.deviceId
             filteredInfo.mapId = param.mapId
-            filteredInfo.posX = avgPosX
-            filteredInfo.posY = avgPosY
+//            filteredInfo.posX = avgPosX
+//            filteredInfo.posY = avgPosY
             filteredInfo.timestamp = subList.last().timestamp
             filteredList.add(filteredInfo)
         }

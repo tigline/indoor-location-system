@@ -37,5 +37,8 @@ class MqttRabbitmqConsumer(val messageHandler: ExternalAllMessageHandler) {
         } catch (e:Exception) {
             log.error("mqttDataQueue error:" + e.message)
         }
+//        finally{
+//            //channel.basicAck(deliveryTag, false);
+//        }
     }
 }
