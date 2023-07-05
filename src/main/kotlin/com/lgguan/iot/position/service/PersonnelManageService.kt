@@ -94,6 +94,12 @@ class PersonnelManageService(
         return personnelTypeService.save(personnelTypeInfo)
     }
 
+    fun deletePersonnelTypeInfo(typeId: Long): RestValue<Boolean> {
+        personnelTypeService.getById(typeId) ?: return failedOf(IErrorCode.DataNotExists, "TypeId [$typeId] not exists")
+        val res = personnelTypeService.removeById(typeId)
+        return okOf(res)
+    }
+
     fun updatePersonnelTypeInfo(typeId: Long, updatePersonnelType: AddOrUpdatePersonnelType): RestValue<Boolean> {
         val personnelTypeInfo = personnelTypeService.getById(typeId)
         personnelTypeInfo ?: return failedOf(IErrorCode.DataNotExists, "TypeId [$typeId] not exists")

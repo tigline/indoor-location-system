@@ -2,6 +2,7 @@ package com.lgguan.iot.position.service
 
 import cn.hutool.core.date.DateUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.lgguan.iot.position.bean.*
 import com.lgguan.iot.position.entity.ThingInfo
 import com.lgguan.iot.position.entity.ThingTypeInfo
@@ -26,6 +27,7 @@ class ThingManageService(
     }
 
     fun addThingTypeInfo(addThingType: AddOrUpdateThingType): Boolean {
+
         val typeInfo = ThingTypeInfo().apply {
             typeName = addThingType.typeName
             picture = addThingType.picture

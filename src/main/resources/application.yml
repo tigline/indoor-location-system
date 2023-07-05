@@ -1,3 +1,81 @@
+
+server:
+  port: 9050
+
 spring:
-  profiles:
-    active: dev
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 200MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.0.10:3306/ips?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Tokyo
+    username: ichiken
+    password: 102938
+
+  data:
+    redis:
+      host: 192.168.0.10
+      port: 6379
+      password: 102938
+
+  rabbitmq:
+    host: 192.168.0.10
+    port: 5672
+    username: ichiken
+    password: 102938
+    virtual-host: /
+    publisher-confirm-type: CORRELATED
+    max-retry: 3
+    connection-timeout: 2000
+    listener:
+      simple:
+        acknowledge-mode: manual
+      direct:
+        acknowledge-mode: manual
+    cache:
+      connection:
+        mode: CONNECTION
+        size: 16
+    exchange:
+      direct-exchange: direct-exchange
+      fanout-direct-exchange: fanout-direct-exchange
+      fanout-direct-exchange-command: fanout-direct-exchange-command
+    queueName:
+      device-queue: device.data.queue
+      fanout-model-queue: fanout.model.queue
+      fanout-command-queue: fanout.command.queue
+    routingKey:
+      device-key: device.data.key
+
+external:
+  url: http://127.0.0.1:8888/
+
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+  writer-with-order-by-keys: true
+
+knife4j:
+  enable: true
+  setting:
+    enable-dynamic-parameter: true
+    enable-swagger-models: false
+    enable-footer: false
+
+mybatis-plus:
+  type-handlers-package: com.lgguan.iot.position.mapper.handler
+  global-config:
+    db-config:
+      update-strategy: ignored
+
+security:
+  api:
+    key: test235452
+
+indoor:
+  file:
+    path: /app/data/fserver/files
+    prefix: /download
+    domain: http://lease.hdcdt.cn
+

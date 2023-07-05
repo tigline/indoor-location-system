@@ -14,4 +14,15 @@ import org.springframework.stereotype.Service
 interface IPersonnelTypeService: IService<PersonnelTypeInfo>
 
 @Service
-class PersonnelTypeServiceImpl: IPersonnelTypeService, ServiceImpl<IPersonnelTypeInfoMapper, PersonnelTypeInfo>()
+class PersonnelTypeServiceImpl: IPersonnelTypeService, ServiceImpl<IPersonnelTypeInfoMapper, PersonnelTypeInfo>() {
+
+    fun typeNameExists(typeName: String): Boolean {
+        return baseMapper.selectCountByTypeName(typeName) > 0
+    }
+    override fun save(entity: PersonnelTypeInfo): Boolean {
+        if (!typeNameExists(entity.typeName ?:"")) {
+            return super<ServiceImpl>.save(entity)
+        }
+        throw IllegalArgumentException("typeName ${entity.typeName} already exists")
+    }
+}

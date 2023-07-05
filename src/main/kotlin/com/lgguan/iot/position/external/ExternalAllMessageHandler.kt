@@ -6,6 +6,8 @@ import com.lgguan.iot.position.bean.*
 import com.lgguan.iot.position.entity.AoaDataInfo
 import com.lgguan.iot.position.entity.BeaconInfo
 import com.lgguan.iot.position.entity.GatewayInfo
+import com.lgguan.iot.position.service.GatewayAndBeaconService
+import com.lgguan.iot.position.util.Point
 import com.lgguan.iot.position.util.objectMapper
 import com.lgguan.iot.position.ws.sendWsMessage
 import kotlinx.coroutines.CoroutineScope
@@ -13,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -23,6 +26,8 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler) 
     val TYPE_LOCATORS = "locators" //基站
     val TYPE_SENSORS = "sensors" //信标
     val dbDispatcher = newSingleThreadContext("DBDispatcher")
+    @Autowired
+    private lateinit var aoaDataService: GatewayAndBeaconService
     fun handler(payload: String, topic: String, companyCode: String, type: String){
         when (type) {
 
@@ -56,44 +61,47 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler) 
                     return
                 }
                 log.info("beacon data: "+JSONUtil.toJsonStr(beaconData))
-                val beaconInfo = BeaconInfo().selectById(beaconData.beaconId)
 
-                if(Objects.nonNull(beaconInfo)){
+                aoaDataService.handleAoaData(beaconData, externalFenceHandler)
 
-                    val aoaDataInfo = getAoaDataInfo(beaconData)
-                    val gatewayInfo: GatewayInfo? = GatewayInfo().selectById(beaconData.gateway)
-
-                    aoaDataInfo.mapId = gatewayInfo?.mapId
-                    aoaDataInfo.type = beaconInfo.type
-                    CoroutineScope(Dispatchers.IO).launch {
-                        sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))
-                        log.info("beaconInfo-------posX:"+beaconInfo.posX + ", posY:"+beaconInfo.posY+", extraInfo:"+beaconInfo.extraInfo)
-                        if ("freezing" != beaconInfo.motion) {
-                            externalFenceHandler.emit(beaconInfo)
-                        }
-                    }
-
-
-
-                    CoroutineScope(dbDispatcher).launch {
-                        beaconInfo.apply {
-                            gateway = aoaDataInfo?.gatewayId
-                            zoneId = aoaDataInfo?.zoneId
-                            optScale = aoaDataInfo?.optScale
-                            //extraInfo = posX.toString() + "," + posY.toString()
-                            posX = aoaDataInfo?.posX
-                            posY = aoaDataInfo?.posY
-                            posZ = aoaDataInfo?.posZ
-                            updateTime = aoaDataInfo?.timestamp
-                            online = true
-                            motion = if (aoaDataInfo.status == 1) "moving" else "freezing"
-                            mapId = gatewayInfo?.mapId
-                        }.updateById()
-
-                        aoaDataInfo.insert()
-                    }
-
-                }
+//                val beaconInfo = BeaconInfo().selectById(beaconData.beaconId)
+//
+//                if(Objects.nonNull(beaconInfo)){
+//                    val prevPoint = Point((beaconInfo.posX ?: 0f) as Double, (beaconInfo.posY ?: 0f) as Double)
+//                    val aoaDataInfo = getAoaDataInfo(beaconData)
+//                    val gatewayInfo: GatewayInfo? = GatewayInfo().selectById(beaconData.gateway)
+//
+//                    aoaDataInfo.mapId = gatewayInfo?.mapId
+//                    aoaDataInfo.type = beaconInfo.type
+//                    CoroutineScope(Dispatchers.IO).launch {
+//                        sendWsMessage(WsMessage(MessageType.AOAData, aoaDataInfo))
+//                        log.info("beaconInfo-------posX:"+beaconInfo.posX + ", posY:"+beaconInfo.posY+", extraInfo:"+beaconInfo.extraInfo)
+//                        if ("freezing" != beaconInfo.motion) {
+//                            externalFenceHandler.emit(beaconInfo to prevPoint)
+//                        }
+//                    }
+//
+//
+//
+//                    CoroutineScope(dbDispatcher).launch {
+//                        beaconInfo.apply {
+//                            gateway = aoaDataInfo?.gatewayId
+//                            zoneId = aoaDataInfo?.zoneId
+//                            optScale = aoaDataInfo?.optScale
+//                            //extraInfo = posX.toString() + "," + posY.toString()
+//                            posX = aoaDataInfo?.posX
+//                            posY = aoaDataInfo?.posY
+//                            posZ = aoaDataInfo?.posZ
+//                            updateTime = aoaDataInfo?.timestamp
+//                            online = true
+//                            motion = if (aoaDataInfo.status == 1) "moving" else "freezing"
+//                            mapId = gatewayInfo?.mapId
+//                        }.updateById()
+//
+//                        aoaDataInfo.insert()
+//                    }
+//
+//                }
             }
 
             else -> {

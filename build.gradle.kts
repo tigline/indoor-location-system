@@ -30,6 +30,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.integration:spring-integration-mqtt:6.0.2")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.eclipse.paho:org.eclipse.paho.mqttv5.client:1.2.5")
     implementation("com.baomidou:mybatis-plus-boot-starter:3.5.3.1")
     implementation("io.github.nefilim.kjwt:kjwt-core:0.5.1")
@@ -53,6 +54,9 @@ dependencies {
     implementation("commons-lang:commons-lang:2.6")
     implementation("commons-beanutils:commons-beanutils:1.9.4")
     implementation("com.google.guava:guava:31.1-jre")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 }
 
 tasks.withType<KotlinCompile> {

@@ -15,5 +15,6 @@ data class UpdateGateway(
     val setY: Double? = null,
     val setZ: Double? = null,
     val angle: Double? = null,
+    val group: String? = null,
     var companyCode: String? = null
 )

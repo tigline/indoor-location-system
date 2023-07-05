@@ -5,11 +5,13 @@ import com.lgguan.iot.position.entity.AoaDataInfo
 import com.lgguan.iot.position.entity.BeaconInfo
 import com.lgguan.iot.position.entity.GatewayInfo
 import com.lgguan.iot.position.service.DeviceManageService
+import com.lgguan.iot.position.service.GatewayAndBeaconService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
 import org.springdoc.core.annotations.ParameterObject
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1")
 class DeviceManageController(val deviceManageService: DeviceManageService) {
     private val log = LoggerFactory.getLogger(javaClass)
+
 
     @Operation(summary = "分页获取网关列表")
     @GetMapping("/gateway")

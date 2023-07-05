@@ -11,6 +11,7 @@ import com.lgguan.iot.position.external.AcServerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -27,8 +28,10 @@ class DeviceManageService(
     val aoaDataInfoService: IAoaDataInfoService,
     val personnelInfoService: IPersonnelInfoService,
     val thingInfoService: IThingInfoService,
-    val acServerApi: AcServerApi
+    val acServerApi: AcServerApi,
+    val redisTemplate: RedisTemplate<String, Any>
 ) {
+
     fun pageGatewayInfos(param: QueryGatewayParam, pageLimit: PageLimit): PageResult<GatewayInfo> {
         return gatewayInfoService.page(
             pageLimit.convert(), KtQueryWrapper(GatewayInfo::class.java)
@@ -84,24 +87,31 @@ class DeviceManageService(
             setY = updateGateway.setY
             setZ = updateGateway.setZ
             angle = updateGateway.angle
+            groupId = updateGateway.group
             updateTime = DateUtil.currentSeconds()
         }
         val update = gatewayInfoService.updateById(gatewayInfo)
         if (update) {
             CoroutineScope(Dispatchers.IO).launch {
                 acServerApi.updateGatewayLocation(
-                    gatewayInfo.gateway!!,
-                    gatewayInfo.setX,
-                    gatewayInfo.setY,
-                    gatewayInfo.setZ,
-                    gatewayInfo.angle,
-                    gatewayInfo.mapId
+                    gateway = gatewayInfo.gateway ?: "",
+                    x = gatewayInfo.setX,
+                    y = gatewayInfo.setY,
+                    z = gatewayInfo.setZ,
+                    angle = gatewayInfo.angle,
+                    group = gatewayInfo.groupId ?: "0",
                 )
             }
         }
         return okOf(update)
     }
-
+//    gatewayInfo.gateway ?: "",
+//    gatewayInfo.setX,
+//    gatewayInfo.setY,
+//    gatewayInfo.setZ,
+//    gatewayInfo.angle,
+//    gatewayInfo.mapId,
+//    gatewayInfo.groupId ?: "0"
     fun deleteGatewayInfo(gateway: String): RestValue<Boolean> {
         val gatewayInfo = gatewayInfoService.getById(gateway)
         gatewayInfo ?: return failedOf(IErrorCode.DataNotExists, "Gateway [$gateway] not exists")
@@ -158,7 +168,11 @@ class DeviceManageService(
             companyCode = updateBeacon.companyCode
             fenceIds = updateBeacon.fenceIds
         }
+        redisTemplate.opsForValue().set("beacon:${deviceId}", beaconInfo)
         val res = beaconInfoService.updateById(beaconInfo)
+        if (res) {
+            redisTemplate.opsForValue().set("beacon:${deviceId}", beaconInfo)
+        }
         return okOf(res)
     }
 
@@ -170,7 +184,12 @@ class DeviceManageService(
             thingInfoService.removeTag(deviceId)
         }
         aoaDataInfoService.remove(KtQueryWrapper(AoaDataInfo::class.java).eq(AoaDataInfo::deviceId, deviceId))
+        redisTemplate.delete("beacon:$deviceId")
         val res = beaconInfoService.removeById(deviceId)
+        if (res) {
+            redisTemplate.delete("beacon:$deviceId")  // Delete BeaconInfo from Redis.
+            redisTemplate.delete("aoaData:$deviceId")  // Delete AoaDataInfo from Redis.
+        }
         return okOf(res)
     }
 
