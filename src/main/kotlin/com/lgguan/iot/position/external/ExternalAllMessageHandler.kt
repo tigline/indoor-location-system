@@ -2,17 +2,13 @@ package com.lgguan.iot.position.external
 
 import cn.hutool.core.date.DateUtil
 import cn.hutool.json.JSONUtil
-import com.lgguan.iot.position.bean.*
+import com.lgguan.iot.position.bean.IotBeaconData
+import com.lgguan.iot.position.bean.IotStationData
+import com.lgguan.iot.position.bean.OnlineStatus
 import com.lgguan.iot.position.entity.AoaDataInfo
-import com.lgguan.iot.position.entity.BeaconInfo
 import com.lgguan.iot.position.entity.GatewayInfo
 import com.lgguan.iot.position.service.GatewayAndBeaconService
-import com.lgguan.iot.position.util.Point
 import com.lgguan.iot.position.util.objectMapper
-import com.lgguan.iot.position.ws.sendWsMessage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -51,6 +47,7 @@ class ExternalAllMessageHandler(val externalFenceHandler: ExternalFenceHandler) 
                     hisX = stationData.hisX
                     hisY = stationData.hisY
                     hisZ = stationData.hisZ
+                    groupId = stationData.groupId
                 }?.updateById()
             }
 
