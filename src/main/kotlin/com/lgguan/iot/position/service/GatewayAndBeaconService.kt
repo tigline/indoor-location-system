@@ -53,7 +53,7 @@ class GatewayAndBeaconService {
         val beaconInfo: BeaconInfo? = getBeaconInfoFromRedis(aoaData.beaconId ?: "")
 
         if (beaconInfo != null) {
-            val prevPoint = Point((beaconInfo.posX ?: 0f) as Double, (beaconInfo.posY ?: 0f) as Double)
+            val prevPoint = Point((beaconInfo.posX ?: 0f).toDouble(), (beaconInfo.posY ?: 0f).toDouble())
             val aoaDataInfo = getAoaDataInfo(aoaData)
             aoaDataInfo.mapId = gatewayInfo?.mapId
 
